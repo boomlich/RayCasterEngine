@@ -13,18 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{b42efac0-ab38-4139-8cb4-d6a55d28c646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\view">
+      <UniqueIdentifier>{84c9edab-c61d-4cfd-91b6-b1d73ae380bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map">
+      <UniqueIdentifier>{f9a01ea8-6d6e-4742-bef8-a6220a622221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map\grid">
+      <UniqueIdentifier>{9d4286bb-083a-4ddb-97c7-707e5196b4a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\map\grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
     <ClCompile Include="view.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="MapParser.cpp">
+      <Filter>Source Files\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="view.h">
+    <ClInclude Include="vec.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texture_loader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Source Files\map\grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="view.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="MapParser.h">
+      <Filter>Source Files\map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

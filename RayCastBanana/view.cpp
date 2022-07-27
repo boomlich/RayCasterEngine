@@ -1,4 +1,5 @@
 ﻿#include "view.h"
+#include "texture_loader.h"
 
 View::View(int width, int height) : window(sf::VideoMode(width, height), "Banana")
 {
@@ -7,12 +8,17 @@ View::View(int width, int height) : window(sf::VideoMode(width, height), "Banana
     render_loop();
 }
 
-
 /**
  * \brief main rendering loop of the application
  */
 void View::render_loop()
 {
+    const sf::Texture texture = load_texture("resources/images/maps/map_01.png");
+
+    sf::Sprite map;
+    map.setTexture(texture);
+    map.setScale(10.0f, 10.0f);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -25,6 +31,7 @@ void View::render_loop()
         }
 
         window.clear();
+        window.draw(map);
         window.display();
     }
 }
