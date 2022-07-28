@@ -21,6 +21,9 @@ void View::render_loop()
 
     m_window.setFramerateLimit(60);
 
+    sf::RectangleShape rect(sf::Vector2f(100.0, 10.0));
+    rect.setPosition(100, 100);
+
     while (m_window.isOpen())
     {
         sf::Event event;
@@ -29,11 +32,11 @@ void View::render_loop()
             if (event.type == sf::Event::Closed)
 	            
                 m_window.close();
-				
         }
 
         m_window.clear();
         m_window.draw(map);
+        m_window.draw(rect);
         m_window.display();
     }
 }

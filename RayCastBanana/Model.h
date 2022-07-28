@@ -13,7 +13,7 @@ private:
 	Grid m_grid;
 	Camera m_camera;
 public:
-	Model();
+	Model(const int screenWidth, const int screenHeight);
 	void update(double deltaTime);
 	Grid& getGrid();
 };

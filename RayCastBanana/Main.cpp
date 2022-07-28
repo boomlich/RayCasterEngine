@@ -4,6 +4,9 @@
 
 int main()
 {
-    Model model;
-    View view(384, 216);
+    int resolutionX = 640;
+    int resolutionY = 480;
+
+    Model model(resolutionX, resolutionY);
+    View view(resolutionX, resolutionY);
 }
