@@ -1,7 +1,5 @@
 ﻿#include "MapParser.h"
 #include "texture_loader.h"
-#include "vec.h"
-
 
 Grid MapParser::parse_img(const std::string& path)
 {
@@ -13,27 +11,30 @@ Grid MapParser::parse_img(const std::string& path)
 	for (int y = 0; y < width; ++y)	{
 		for (int x = 0; x < height; ++x) {
 			const sf::Color cellColor = img.getPixel(x, y);
-			const cell_state cellState = parse_color(cellColor);
-			grid.setCell(Vec2(x, y), cellState);
+			const CellState cellState = parse_color(cellColor);
+			const sf::Vector2i pos(x, y);
+			grid.setCell(pos, cellState);
+
+			if (cellState == PLAYER_SPAWN)
+			{
+				grid.setPlayerSpawn(pos);
+			}
 		}
 	}
 	return grid;
 }
 
-cell_state MapParser::parse_color(sf::Color color)
+CellState MapParser::parse_color(sf::Color color)
 {
 	const std::string color_value = std::to_string(color.r) + ", " + std::to_string(color.g) + ", " + std::to_string(color.b) + ", " + std::to_string(color.a);
 
 	if (color_value == "0, 0, 0, 255") { // Black
 		return WALL1;
 	}
-	if (color_value == "132, 126, 135, 255") { // Gray
-		return FLOOR1;
-	}
 	if (color_value == "0, 255, 0, 255") { // Green
 		return PLAYER_SPAWN;
 	}
-	return WALL1;
+	return FLOOR1;
 }
 
 

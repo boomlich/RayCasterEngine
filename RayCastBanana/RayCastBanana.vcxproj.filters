@@ -25,12 +25,18 @@
     <Filter Include="Source Files\map\grid">
       <UniqueIdentifier>{9d4286bb-083a-4ddb-97c7-707e5196b4a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{b348b876-ace1-4692-b910-2d451e8ebb8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\player">
+      <UniqueIdentifier>{0d84f4e6-3ff0-47e3-8d22-9b59c81a695c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
+    <ClCompile Include="m_grid.cpp">
       <Filter>Source Files\map\grid</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -42,6 +48,12 @@
     <ClCompile Include="MapParser.cpp">
       <Filter>Source Files\map</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vec.h">
@@ -50,7 +62,7 @@
     <ClInclude Include="texture_loader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h">
+    <ClInclude Include="m_grid.h">
       <Filter>Source Files\map\grid</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -61,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="MapParser.h">
       <Filter>Source Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Source Files\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

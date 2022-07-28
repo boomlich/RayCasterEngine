@@ -4,10 +4,10 @@
 class View
 {
 private:
-	sf::RenderWindow window;
+	sf::RenderWindow m_window;
 public:
-	int width;
-	int height;
+	int m_width;
+	int m_height;
 
 private:
 	void render_loop();

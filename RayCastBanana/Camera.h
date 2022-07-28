@@ -1,18 +1,19 @@
 ﻿#pragma once
-#include "vec.h"
+#include <SFML/System.hpp>
 
 class Camera
 {
 private:
-	int m_screenWidth;
-	Vec2 m_position; // Position in 2d space of the camera
-	Vec2 m_direction; // Direction of the camera
-	Vec2 m_cameraPlane; // 2d version of the camera plane
+	int m_screenWidth = 300;
+	sf::Vector2f m_position = sf::Vector2f(1.0f, 1.0f); // Position in 2d space of the Camera
+	sf::Vector2f m_direction = sf::Vector2f(-1.0f, 0.0f); // Direction of the Camera
+	sf::Vector2f m_cameraPlane = sf::Vector2f(0.0f, 0.6666f); // 2d version of the Camera plane
 public:
 
 private:
 	void ray_trace();
 public:
-	Camera(int screenWidth, Vec2 position, Vec2 direction, Vec2 cameraPlane);
+	Camera();
+	Camera(int screenWidth, sf::Vector2f position, sf::Vector2f direction, sf::Vector2f cameraPlane);
 	void update();
 };

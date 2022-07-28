@@ -1,11 +1,9 @@
 #include "MapParser.h"
+#include "Model.h"
 #include "view.h"
 
 int main()
 {
-    MapParser map;
-    map.parse_img("resources/images/maps/map_01.png");
+    Model model;
     View view(384, 216);
-    
-
 }

@@ -1,10 +1,10 @@
 ﻿#include "view.h"
 #include "texture_loader.h"
 
-View::View(int width, int height) : window(sf::VideoMode(width, height), "Banana")
+View::View(int width, int height) : m_window(sf::VideoMode(width, height), "Banana")
 {
-    this->width = width;
-    this->height = height;
+    m_width = width;
+    m_height = height;
     render_loop();
 }
 
@@ -19,19 +19,21 @@ void View::render_loop()
     map.setTexture(texture);
     map.setScale(10.0f, 10.0f);
 
-    while (window.isOpen())
+    m_window.setFramerateLimit(60);
+
+    while (m_window.isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (m_window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
 	            
-                window.close();
+                m_window.close();
 				
         }
 
-        window.clear();
-        window.draw(map);
-        window.display();
+        m_window.clear();
+        m_window.draw(map);
+        m_window.display();
     }
 }

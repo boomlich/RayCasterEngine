@@ -21,6 +21,5 @@ inline sf::Image load_img(const std::string& path)
 	{
 		std::cout << "[ERROR] File not found";
 	}
-
 	return image;
 }
