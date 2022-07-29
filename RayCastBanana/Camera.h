@@ -1,23 +1,25 @@
 ﻿#pragma once
-#include <SFML/System.hpp>
-
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "m_grid.h"
 
 class Camera
 {
-private:
-	int m_screenHeight;
-	int m_screenWidth;
-	sf::Vector2f m_position; // Position in 2d space of the Camera
-	sf::Vector2f m_direction; // Direction of the Camera
-	sf::Vector2f m_cameraPlane; // 2d version of the Camera plane
-	Grid m_grid;
-public:
 
+	// Variables
 private:
-	void ray_trace();
+	double m_posX, m_posY; // Position of the camera
+	double m_dirX, m_dirY; // Direction of the camera
+	double m_planeX, m_planeY; // Camera plane
+
+
+	// Methods
+private:
+	void rayCast(sf::RenderWindow& window);
+
+	void calculateStepAndInitDist(double& rayDir, double& sideDist, double& deltaDist, int& step, int& map);
 public:
 	Camera();
-	Camera(int screenWidth, int screenHeight, sf::Vector2f position, sf::Vector2f direction, sf::Vector2f cameraPlane, Grid& m_grid);
-	void update();
+	void update(sf::RenderWindow& window, Grid& grid);
+	void setPosition(sf::Vector2f pos);
+
 };

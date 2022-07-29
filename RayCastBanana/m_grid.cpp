@@ -2,8 +2,8 @@
 
 Grid::Grid()
 {
-	m_width = 10;
-	m_height = 10;
+	m_width = 0;
+	m_height = 0;
 }
 
 Grid::Grid(const int x, const int y)

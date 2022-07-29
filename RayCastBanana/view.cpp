@@ -1,11 +1,18 @@
 ﻿#include "view.h"
 #include "texture_loader.h"
 
+
 View::View(int width, int height) : m_window(sf::VideoMode(width, height), "Banana")
 {
     m_width = width;
     m_height = height;
-    render_loop();
+    m_camera = Camera();
+}
+
+void View::setGrid(Grid grid)
+{
+    m_mapGrid = grid;
+    m_camera.setPosition((sf::Vector2f)m_mapGrid.getPlayerSpawn());
 }
 
 /**
@@ -34,7 +41,11 @@ void View::render_loop()
                 m_window.close();
         }
 
+        
+        
+
         m_window.clear();
+        m_camera.update(m_window, m_mapGrid);
         m_window.draw(map);
         m_window.draw(rect);
         m_window.display();
