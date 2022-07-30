@@ -59,5 +59,8 @@
     <ClInclude Include="MapParser.h">
       <Filter>Source Files\map</Filter>
     </ClInclude>
+    <ClInclude Include="MathMethods.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

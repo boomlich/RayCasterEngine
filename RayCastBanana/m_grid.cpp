@@ -1,15 +1,17 @@
 ﻿#include "m_grid.h"
 
+#include <iostream>
+
 Grid::Grid()
 {
 	m_width = 0;
 	m_height = 0;
 }
 
-Grid::Grid(const int x, const int y)
+Grid::Grid(const int width, const int height)
 {
-	this->m_width = x;
-	this->m_height = y;
+	this->m_width = width;
+	this->m_height = height;
 
 	resetGrid();
 }
@@ -38,7 +40,7 @@ CellState Grid::getCell(const sf::Vector2i position)
 	{
 		return m_grid[position.y][position.x];
 	}
-	return m_grid[0][0];
+	return WALL1;
 }
 
 sf::Vector2i Grid::getPlayerSpawn()
@@ -52,8 +54,23 @@ void Grid::setPlayerSpawn(sf::Vector2i position)
 	m_playerSpawn = position;
 }
 
+std::string Grid::toString()
+{
+	std::string result;
+	for (auto row : m_grid)
+	{
+		for (auto column : row)
+		{
+			result += std::to_string(column) + " ";
+		}
+		result += "\n";
+	}
+
+	return result;
+}
+
 bool Grid::inBounds(const sf::Vector2i position)
 {
-	return position.x > 0 && position.x < m_width&& position.y > 0 && position.y < m_height;
+	return position.x > -1 && position.x < m_width&& position.y > -1 && position.y < m_height;
 }
 
