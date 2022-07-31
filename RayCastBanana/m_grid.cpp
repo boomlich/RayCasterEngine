@@ -69,6 +69,11 @@ std::string Grid::toString()
 	return result;
 }
 
+std::vector<std::vector<CellState>> Grid::getCells()
+{
+	return m_grid;
+}
+
 bool Grid::inBounds(const sf::Vector2i position)
 {
 	return position.x > -1 && position.x < m_width&& position.y > -1 && position.y < m_height;

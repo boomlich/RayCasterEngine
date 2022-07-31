@@ -1,13 +1,11 @@
-#include "MapParser.h"
-#include "view.h"
+#include "Controller.h"
+#include "Renderer.h"
 
 int main()
 {
-    int resolutionX = 640;
-    int resolutionY = 480;
-
-    MapParser mapParser;
-    View view(resolutionX, resolutionY);
-    view.setGrid(mapParser.parse_img("resources/images/maps/map_01.png"));
-    view.render_loop();
+    const int resolutionX = 640;
+    const int resolutionY = 480;
+    Model model;
+    Renderer view(resolutionX, resolutionY, &model);
+    Controller controller(&model, &view);
 }

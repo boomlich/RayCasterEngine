@@ -22,8 +22,17 @@
     <Filter Include="Source Files\map\grid">
       <UniqueIdentifier>{9d4286bb-083a-4ddb-97c7-707e5196b4a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\controller">
+      <UniqueIdentifier>{223d31cc-068d-4302-a2d1-50edf87ee0a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map\mapParser">
+      <UniqueIdentifier>{ee2847e5-4299-49d6-85cf-047cc7fe0fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{cfaa474c-e5b8-4ae4-be5c-3a7cd2ee231f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\view\camera">
-      <UniqueIdentifier>{b42efac0-ab38-4139-8cb4-d6a55d28c646}</UniqueIdentifier>
+      <UniqueIdentifier>{5f349f58-95cf-4d69-82e6-88444e8e8b23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,14 +42,23 @@
     <ClCompile Include="m_grid.cpp">
       <Filter>Source Files\map\grid</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="MapParser.cpp">
+      <Filter>Source Files\map\mapParser</Filter>
+    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\view\camera</Filter>
     </ClCompile>
-    <ClCompile Include="view.cpp">
-      <Filter>Source Files\view</Filter>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\model</Filter>
     </ClCompile>
-    <ClCompile Include="MapParser.cpp">
-      <Filter>Source Files\map</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,17 +68,35 @@
     <ClInclude Include="m_grid.h">
       <Filter>Source Files\map\grid</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source Files\view\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="view.h">
+    <ClInclude Include="Renderer.h">
       <Filter>Source Files\view</Filter>
-    </ClInclude>
-    <ClInclude Include="MapParser.h">
-      <Filter>Source Files\map</Filter>
     </ClInclude>
     <ClInclude Include="MathMethods.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Source Files\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="MapParser.h">
+      <Filter>Source Files\map\mapParser</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\view\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="CtrlPawn.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Controllable.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Source Files\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

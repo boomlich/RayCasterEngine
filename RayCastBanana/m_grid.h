@@ -33,4 +33,5 @@ public:
 	sf::Vector2i getPlayerSpawn();
 	void setPlayerSpawn(sf::Vector2i position);
 	std::string toString();
+	std::vector<std::vector<CellState>> getCells();
 };

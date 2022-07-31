@@ -156,18 +156,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="m_grid.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapParser.cpp" />
-    <ClCompile Include="view.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Controllable.h" />
+    <ClInclude Include="CtrlPawn.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="MathMethods.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="m_grid.h" />
     <ClInclude Include="MapParser.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="texture_loader.h" />
-    <ClInclude Include="view.h" />
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
