@@ -24,3 +24,9 @@ inline sf::Vector2f vectorNormalUnit(sf::Vector2f input)
 	return vectorUnit(vectorNormal(input));
 }
 
+inline sf::Vector2<double> rotateVector(sf::Vector2<double> input, double angle)
+{
+	double vecX = input.x * cos(angle) - input.y * sin(angle);
+	double vecY = input.x * sin(angle) + input.y * cos(angle);
+	return sf::Vector2<double>(vecX, vecY);
+}

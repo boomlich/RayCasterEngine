@@ -16,8 +16,12 @@ public:
 
 private:
 	void drawMinimap(Grid& grid, CtrlPawn* player);
+	void drawWorld();
 public:
 	Renderer(int width, int height, Model* model);
 	void update(float dt);
+	sf::Vector2i getWindowPosition();
+	int getWidth();
+	int getHeight();
 	
 };
