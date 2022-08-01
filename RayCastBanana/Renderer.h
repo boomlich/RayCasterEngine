@@ -9,6 +9,11 @@ class Renderer
 private:
 	sf::RenderWindow m_window;
 	Camera m_camera;
+	sf::Image m_wallTexture;
+	sf::Image m_pixelBufferClear;
+	sf::Image m_pixelBuffer;
+	sf::Texture m_screenTexture;
+	sf::Sprite m_screenSprite;
 public:
 	int m_width;
 	int m_height;
@@ -23,5 +28,4 @@ public:
 	sf::Vector2i getWindowPosition();
 	int getWidth();
 	int getHeight();
-	
 };

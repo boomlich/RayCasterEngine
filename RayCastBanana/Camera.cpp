@@ -1,4 +1,7 @@
 ﻿#include "Camera.h"
+
+#include <iostream>
+
 #include "MathMethods.h"
 
 void Camera::attachToPlayer(Player& player)
@@ -13,7 +16,7 @@ void Camera::update(int screenWidth, Grid& grid)
 {
 	m_rays.clear();
 
-	planeX = - *m_dirY;
+	planeX = -*m_dirY;
 	planeY = *m_dirX;
 
 	for (int i = 0; i < screenWidth; ++i)
@@ -82,17 +85,22 @@ void Camera::update(int screenWidth, Grid& grid)
 
 		double perpWallDist;
 		double rayLength;
+		double wallIntersectPoint;
+		sf::Vector2<double> unitDir = vectorUnit(rayDirX, rayDirY, rayDirLength);
 
 		if (verticleWall)
 		{
 			rayLength = sideDistX - deltaDistX;
 			perpWallDist = rayLength * cos(angle);
+			wallIntersectPoint = (*m_posY + unitDir.y * rayLength) - (double)mapY;
 		} else
 		{
 			rayLength = sideDistY - deltaDistY;
 			perpWallDist = rayLength * cos(angle);
+			wallIntersectPoint = (*m_posX + unitDir.x * rayLength) - (double)mapX;
 		}
 
-		m_rays.push_back(Ray(perpWallDist, rayLength, rayDirX, rayDirY, verticleWall));
+
+		m_rays.push_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall));
 	}
 }

@@ -12,6 +12,10 @@ Renderer::Renderer(int width, int height, Model* model) :
     m_window.setFramerateLimit(60);
     m_camera.attachToPlayer(*m_model->getPlayer());
     m_window.setMouseCursorVisible(false);
+    m_wallTexture = load_img("resources/images/textures/t_wall_spaceship_01.png");
+
+    m_pixelBuffer.create(width, height, sf::Color(255, 255, 255, 255));
+    m_screenTexture.create(width, height);
 }
 
 void Renderer::update(float dt)
@@ -124,28 +128,43 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
 
 void Renderer::drawWorld()
 {
-    int i = 0;
+    // Clear pixel buffer
+    m_pixelBuffer.create(640, 480, sf::Color(0, 0, 0, 255));
+    const float h = (float)m_window.getSize().y;
+    const int textureWidth = m_wallTexture.getSize().x - 1;
+    const int textureHeight = m_wallTexture.getSize().y - 1;
+
+    int cnt = 0;
+    int x = 0;
     for (auto& ray : m_camera.m_rays)
     {
-        float h = (float)m_window.getSize().y;
-        float lineHeight = h / (float)ray.wallDist;
-        float drawStart = (h - lineHeight) / 2;
-        // if (drawStart < 0) drawStart = 0;
+        // Calculate line heights and where to draw the first pixel
+        const float lineHeight = h / (float)ray.wallDist;
+        const float drawStart = (h - lineHeight) / 2;
 
-        sf::RectangleShape wall(sf::Vector2f(1.0f, lineHeight));
-        wall.setPosition(i, drawStart);
+        // Draw textures
+        for (int i = 0; i < (int)lineHeight; ++i)
+        {
+            // Get texture pixel color
+        	int pixelX = (int)(ray.wallIntersectPoint * (float)textureWidth);
+        	int pixelY = (int)((float)i / (lineHeight - 1) * (float)textureHeight);
+        	sf::Color color = m_wallTexture.getPixel(pixelX, pixelY);
+            if (ray.verticleWall)
+            {
+                color = sf::Color(color.r / 2, color.g / 2, color.b / 2, color.a);
+            }
 
-        sf::Color color;
-        const double wallDarkness = (ray.wallDist > 1) ? ray.wallDist : 1.0;
-        if (ray.verticleWall)
-        {
-            color = sf::Color(73 / wallDarkness, 230 / wallDarkness, 97 / wallDarkness, 255);
-        } else
-        {
-            color = sf::Color(59 / wallDarkness, 191 / wallDarkness, 79 / wallDarkness, 255);
+            // Update buffer with color from texture
+            int y = int(drawStart + i);
+            if (y > -1 && y < h)
+            {
+                m_pixelBuffer.setPixel(x, y, color);
+            }
+            cnt++;
         }
-        wall.setFillColor(color);
-        m_window.draw(wall);
-        i++;
+    	x++;
     }
+    m_screenTexture.update(m_pixelBuffer);
+    m_window.draw(sf::Sprite(m_screenTexture));
+    std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
 }

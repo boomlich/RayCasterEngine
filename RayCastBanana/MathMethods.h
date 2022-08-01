@@ -13,11 +13,18 @@ inline sf::Vector2<double> vectorNormal(double x, double y)
 	return sf::Vector2<double>(-y, x);
 }
 
+inline sf::Vector2<double> vectorUnit(double x, double y, double length)
+{
+	return sf::Vector2<double>(x / length, y / length);
+}
+
 inline sf::Vector2<double> vectorUnit(double x, double y)
 {
 	double length = vectorLength(x, y);
-	return sf::Vector2<double>(x / length, y / length);
+	return vectorUnit(x, y, length);
 }
+
+
 
 inline sf::Vector2<double> vectorNormalUnit(double x, double y)
 {

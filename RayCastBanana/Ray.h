@@ -2,15 +2,15 @@
 
 struct Ray
 {
-	double length;
+	double wallIntersectPoint;
 	double wallDist;
 	double dirX;
 	double dirY;
 	bool verticleWall;
-	Ray(double dist, double len, double x, double y, bool vWall)
+	Ray(double dist, double wallPoint, double x, double y, bool vWall)
 	{
 		wallDist = dist;
-		length = len;
+		wallIntersectPoint = wallPoint;
 		dirX = x;
 		dirY = y;
 		verticleWall = vWall;
