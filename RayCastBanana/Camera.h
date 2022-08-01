@@ -10,6 +10,8 @@ public:
 	double* m_posY;
 	double* m_dirX;
 	double* m_dirY;
+	double planeX;
+	double planeY;
 	std::vector<Ray> m_rays;
 
 public:

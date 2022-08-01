@@ -1,11 +1,5 @@
 ﻿#include "Camera.h"
-
-#include <iostream>
-#include <SFML/Graphics/Color.hpp>
-
 #include "MathMethods.h"
-
-#define PI 3.14159265359
 
 void Camera::attachToPlayer(Player& player)
 {
@@ -18,19 +12,20 @@ void Camera::attachToPlayer(Player& player)
 void Camera::update(int screenWidth, Grid& grid)
 {
 	m_rays.clear();
-	double fov = PI / 2;
+
+	planeX = - *m_dirY;
+	planeY = *m_dirX;
 
 	for (int i = 0; i < screenWidth; ++i)
 	{
-		double cameraX = (i * 2.0 / (double)(screenWidth - 1)) - 1.0;
-		double angle = fov / 2.0 * cameraX;
-		sf::Vector2<double> rotatedDir = rotateVector(sf::Vector2<double>(*m_dirX, *m_dirY), angle);
+		double cameraX = (i * 2.0 / (double)(screenWidth - 1)) - 1.0; // from -1 to 1.
+		const double rayDirX = *m_dirX + planeX * cameraX; 
+		const double rayDirY = *m_dirY + planeY * cameraX;
+		const double rayDirLength = vectorLength(rayDirX, rayDirY);
+		const double angle = acos((rayDirX * *m_dirX + rayDirY * *m_dirY)/ rayDirLength);
 
-		const double rayDirX = rotatedDir.x;
-		const double rayDirY = rotatedDir.y;
-
-		const double deltaDistX = abs(1 / rayDirX);
-		const double deltaDistY = abs(1 / rayDirY);
+		const double deltaDistX = abs(1 / rayDirX) * rayDirLength;
+		const double deltaDistY = abs(1 / rayDirY) * rayDirLength;
 
 		double sideDistX;
 		double sideDistY;
@@ -41,6 +36,7 @@ void Camera::update(int screenWidth, Grid& grid)
 		int stepX;
 		int stepY;
 
+		bool verticleWall;
 
 		if (rayDirX < 0) // left direction
 		{
@@ -64,9 +60,6 @@ void Camera::update(int screenWidth, Grid& grid)
 
 		const int max = 100;
 		int cnt = 0;
-
-		bool verticleWall;
-
 		while (cnt < max)
 		{
 			if (sideDistX < sideDistY)
@@ -94,12 +87,10 @@ void Camera::update(int screenWidth, Grid& grid)
 		{
 			rayLength = sideDistX - deltaDistX;
 			perpWallDist = rayLength * cos(angle);
-			//wallColor = sf::Color(73 / perpWallDist, 230 / perpWallDist, 97 / perpWallDist, 255);
 		} else
 		{
 			rayLength = sideDistY - deltaDistY;
 			perpWallDist = rayLength * cos(angle);
-			//wallColor = sf::Color(59 / perpWallDist, 191 / perpWallDist, 79 / perpWallDist, 255);
 		}
 
 		m_rays.push_back(Ray(perpWallDist, rayLength, rayDirX, rayDirY, verticleWall));

@@ -3,30 +3,31 @@
 #include <cmath>
 #include <SFML/System/Vector2.hpp>
 
-inline double vectorLength(sf::Vector2f input)
+inline double vectorLength(double x, double y)
 {
-	return sqrt(input.x * input.x + input.y * input.y);
+	return sqrt(x * x + y * y);
 }
 
-inline sf::Vector2f vectorNormal(sf::Vector2f input)
+inline sf::Vector2<double> vectorNormal(double x, double y)
 {
-	return sf::Vector2f(-input.y, input.x);
+	return sf::Vector2<double>(-y, x);
 }
 
-inline sf::Vector2f vectorUnit(sf::Vector2f input)
+inline sf::Vector2<double> vectorUnit(double x, double y)
 {
-	double length = vectorLength(input);
-	return sf::Vector2f(input.x / length, input.y / length);
+	double length = vectorLength(x, y);
+	return sf::Vector2<double>(x / length, y / length);
 }
 
-inline sf::Vector2f vectorNormalUnit(sf::Vector2f input)
+inline sf::Vector2<double> vectorNormalUnit(double x, double y)
 {
-	return vectorUnit(vectorNormal(input));
+	sf::Vector2<double> normal = vectorNormal(x, y);
+	return vectorUnit(normal.x, normal.y);
 }
 
-inline sf::Vector2<double> rotateVector(sf::Vector2<double> input, double angle)
+inline sf::Vector2<double> rotateVector(double x, double y, double angle)
 {
-	double vecX = input.x * cos(angle) - input.y * sin(angle);
-	double vecY = input.x * sin(angle) + input.y * cos(angle);
+	double vecX = x * cos(angle) - y * sin(angle);
+	double vecY = x * sin(angle) + y * cos(angle);
 	return sf::Vector2<double>(vecX, vecY);
 }

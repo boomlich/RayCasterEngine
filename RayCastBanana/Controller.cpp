@@ -61,6 +61,7 @@ void Controller::keyboardInput()
 		m_renderer->getWindowPosition().x + m_renderer->getWidth() / 2,
 		m_renderer->getWindowPosition().y + m_renderer->getHeight() / 2
 	));
+
 	oldMouseX = sf::Mouse::getPosition().x;
 	
 }

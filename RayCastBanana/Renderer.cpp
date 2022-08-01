@@ -103,8 +103,8 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
     // Draw rays
 	for (auto &ray : m_camera.m_rays)
 	{
-        float dirEndX = mapPosX + (float)(ray.dirX * (double)mapCellSizeX * ray.length);
-        float dirEndY = mapPosY + (float)(ray.dirY * (double)mapCellSizeY * ray.length);
+        float dirEndX = mapPosX + (float)(ray.dirX * (double)mapCellSizeX * ray.wallDist);
+        float dirEndY = mapPosY + (float)(ray.dirY * (double)mapCellSizeY * ray.wallDist);
         sf::Vertex line[] =
         {
             sf::Vertex(sf::Vector2f(mapPosX, mapPosY)),
