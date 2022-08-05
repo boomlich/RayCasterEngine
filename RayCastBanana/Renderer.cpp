@@ -1,7 +1,10 @@
 ﻿#include "Renderer.h"
 
+#include "MathMethods.h"
 #include "m_grid.h"
 #include "texture_loader.h"
+
+#define PI 3.14159265359
 
 Renderer::Renderer(int width, int height, Model* model) :
 	m_window(sf::VideoMode(width, height), "Banana"),
@@ -12,9 +15,15 @@ Renderer::Renderer(int width, int height, Model* model) :
     m_window.setFramerateLimit(60);
     m_camera.attachToPlayer(*m_model->getPlayer());
     m_window.setMouseCursorVisible(false);
-    m_wallTexture = load_img("resources/images/textures/t_wall_spaceship_01.png");
+
+	m_wallTexture = load_img("resources/images/textures/t_wall_spaceship_01.png");
+    m_floorTexture = load_img("resources/images/textures/texture_floor_scifi_01.png");
+    m_ceilingTexture = load_img("resources/images/textures/texture_ceiling_window_01.png");
+
 
     m_pixelBuffer.create(width, height, sf::Color(255, 255, 255, 255));
+    m_pixelBufferClear.create(width, height, sf::Color(0, 0, 0, 255));
+
     m_screenTexture.create(width, height);
 }
 
@@ -32,7 +41,7 @@ void Renderer::update(float dt)
 
 	m_window.clear();
 
-    m_camera.update(m_window.getSize().x, m_model->getGrid());
+    m_camera.update(m_window.getSize().x, m_window.getSize().y, m_model->getGrid());
     drawWorld();
     drawMinimap(m_model->getGrid(), m_model->getPawn());
 
@@ -129,42 +138,146 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
 void Renderer::drawWorld()
 {
     // Clear pixel buffer
-    m_pixelBuffer.create(640, 480, sf::Color(0, 0, 0, 255));
-    const float h = (float)m_window.getSize().y;
-    const int textureWidth = m_wallTexture.getSize().x - 1;
-    const int textureHeight = m_wallTexture.getSize().y - 1;
+    m_pixelBuffer = sf::Image(m_pixelBufferClear);
+
+    const float screenHeight = (float)m_window.getSize().y;
+    const int halfH = screenHeight / 2;
+    const unsigned int textureWidth = m_wallTexture.getSize().x - 1;
+    const unsigned int textureHeight = m_wallTexture.getSize().y - 1;
+
 
     int cnt = 0;
     int x = 0;
+
+    // Height of the wall in units
+    const float wallHeight = screenHeight * 0.75;
+
     for (auto& ray : m_camera.m_rays)
     {
-        // Calculate line heights and where to draw the first pixel
-        const float lineHeight = h / (float)ray.wallDist;
-        const float drawStart = (h - lineHeight) / 2;
+        // Wall column height based of the distance
+        const float lineHeight = wallHeight / (float)ray.wallDist;
+
+        // First pixel in the y-axis to draw
+    	float drawStart = (screenHeight - lineHeight) / 2.0;
+        if (drawStart < 0) drawStart = 0.0f;
+        float heightOffset = 0.0f; // draw start offset if line is higher then screen
+
+        // Last pixel in the y-axis to draw.
+        float drawEnd = lineHeight;
+        if (drawEnd > screenHeight)
+        {
+            drawEnd = screenHeight;
+            heightOffset = (lineHeight - drawEnd) / 2;
+        }
+
+        int textureX = (int)(ray.wallIntersectPoint * (float)(textureWidth));
+        double textureStep = (double)textureHeight / lineHeight;
+        int prevTextureY = -1; // I
+		sf::Color color;
 
         // Draw textures
-        for (int i = 0; i < (int)lineHeight; ++i)
+        for (int i = 0; i < (int)drawEnd; ++i)
         {
             // Get texture pixel color
-        	int pixelX = (int)(ray.wallIntersectPoint * (float)textureWidth);
-        	int pixelY = (int)((float)i / (lineHeight - 1) * (float)textureHeight);
-        	sf::Color color = m_wallTexture.getPixel(pixelX, pixelY);
-            if (ray.verticleWall)
-            {
-                color = sf::Color(color.r / 2, color.g / 2, color.b / 2, color.a);
-            }
+            int textureY = int(((float)i + heightOffset) * textureStep);
 
-            // Update buffer with color from texture
-            int y = int(drawStart + i);
-            if (y > -1 && y < h)
+            if (textureY > prevTextureY)
             {
-                m_pixelBuffer.setPixel(x, y, color);
+                prevTextureY = textureY;
+
+                // Get color of the texture pixel
+                color = m_wallTexture.getPixel(textureX, textureY);
+                if (ray.verticleWall)
+                {
+                    color = sf::Color(color.r / 2, color.g / 2, color.b / 2, color.a);
+                }
+
+                // Calculate fog
+                double fog = calculateFog(ray.wallDist, 1, 15);
+                color = sf::Color(
+                    color.r * fog,
+                    color.g * fog,
+                    color.b * fog,
+                    color.a);
+
             }
+            int y = (int)(drawStart + i);
+            m_pixelBuffer.setPixel(x, y, color);
+        }
+
+
+        // Draw floor & ceiling
+        // Position of the camera in z-axis
+        float cameraZ = wallHeight / 2.0f;
+        int prevTX = -1;
+        int prevTY = -1;
+
+        for (int y = drawStart + lineHeight; y < screenHeight; y++)
+        {
+            // Offset from the center of the screen.
+            float rayCenterOffset = y - halfH;
+
+            // Angle from x-axis: vector = (1, 0)
+            float angleXAxis = angleFromXAxis(ray.dirX, ray.dirY);
+
+            // World distance to the point on the floor. Using cos to correct for fisheye-effect
+            float pointDist = cameraZ / rayCenterOffset / cos(ray.angle);
+
+            // Coordinates of the point on the floor
+            float floorX = *m_camera.m_posX + cos(angleXAxis) * pointDist;
+            float floorY = *m_camera.m_posY - sin(angleXAxis) * pointDist;
+
+            // Texture coordinates
+            int tx = int((floorX - (int)floorX) * 32);
+            int ty = int((floorY - (int)floorY) * 32);
+
+            // Draw floor
+            if (tx != prevTX && ty != prevTY)
+            {
+                double fog = calculateFog(pointDist, 1, 15);
+                color = m_floorTexture.getPixel(tx, ty);
+                color = sf::Color(
+                    color.r * fog,
+                    color.g * fog,
+                    color.b * fog,
+                    color.a);
+            }
+            m_pixelBuffer.setPixel(x, y, color);
+
+            // Draw ceiling
+            if (tx != prevTX && ty != prevTY)
+            {
+                double fog = calculateFog(pointDist, 1, 15);
+                color = m_ceilingTexture.getPixel(tx, ty);
+                color = sf::Color(
+                    color.r * fog,
+                    color.g * fog,
+                    color.b * fog,
+                    color.a);
+            }
+            m_pixelBuffer.setPixel(x, screenHeight - y, color);
             cnt++;
         }
     	x++;
     }
     m_screenTexture.update(m_pixelBuffer);
+    // m_screenTexture.setSmooth(true);
     m_window.draw(sf::Sprite(m_screenTexture));
-    std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
+    // std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
+}
+
+// Calculate the amount of fog depending on the distance. Linear iterperted.
+// returns 1 if no fog. 0 if full fog.
+double Renderer::calculateFog(double dist, double minDist, double maxDist)
+{
+	if (dist < minDist)
+	{
+        return 1;
+	}
+	if (dist > maxDist)
+	{
+        return 0;
+	}
+
+    return 1 - ((dist - minDist) / (maxDist - minDist));
 }

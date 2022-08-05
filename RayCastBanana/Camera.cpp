@@ -1,7 +1,5 @@
 ﻿#include "Camera.h"
 
-#include <iostream>
-
 #include "MathMethods.h"
 
 void Camera::attachToPlayer(Player& player)
@@ -12,13 +10,14 @@ void Camera::attachToPlayer(Player& player)
 	m_dirY = player.getDir().y;
 }
 
-void Camera::update(int screenWidth, Grid& grid)
+void Camera::update(int screenWidth, int screenHeight, Grid& grid)
 {
 	m_rays.clear();
 
 	planeX = -*m_dirY;
 	planeY = *m_dirX;
 
+	// WALL CASTING
 	for (int i = 0; i < screenWidth; ++i)
 	{
 		double cameraX = (i * 2.0 / (double)(screenWidth - 1)) - 1.0; // from -1 to 1.
@@ -101,6 +100,6 @@ void Camera::update(int screenWidth, Grid& grid)
 		}
 
 
-		m_rays.push_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall));
+		m_rays.push_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall, angle));
 	}
 }

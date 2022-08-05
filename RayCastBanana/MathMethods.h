@@ -24,8 +24,6 @@ inline sf::Vector2<double> vectorUnit(double x, double y)
 	return vectorUnit(x, y, length);
 }
 
-
-
 inline sf::Vector2<double> vectorNormalUnit(double x, double y)
 {
 	sf::Vector2<double> normal = vectorNormal(x, y);
@@ -37,4 +35,15 @@ inline sf::Vector2<double> rotateVector(double x, double y, double angle)
 	double vecX = x * cos(angle) - y * sin(angle);
 	double vecY = x * sin(angle) + y * cos(angle);
 	return sf::Vector2<double>(vecX, vecY);
+}
+
+inline double angleFromXAxis(double x, double y)
+{
+	double angle = acos(x / vectorLength(x, y));
+
+	if (y > 0)
+	{
+		return 2.0 * 3.14159265359 - angle;
+	}
+	return angle;
 }

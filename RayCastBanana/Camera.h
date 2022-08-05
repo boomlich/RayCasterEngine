@@ -16,5 +16,5 @@ public:
 
 public:
 	void attachToPlayer(Player& player);
-	void update(int width, Grid& grid);
+	void update(int width, int height, Grid& grid);
 };

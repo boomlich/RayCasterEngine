@@ -10,6 +10,10 @@ private:
 	sf::RenderWindow m_window;
 	Camera m_camera;
 	sf::Image m_wallTexture;
+	sf::Image m_floorTexture;
+	sf::Image m_ceilingTexture;
+
+
 	sf::Image m_pixelBufferClear;
 	sf::Image m_pixelBuffer;
 	sf::Texture m_screenTexture;
@@ -22,6 +26,7 @@ public:
 private:
 	void drawMinimap(Grid& grid, CtrlPawn* player);
 	void drawWorld();
+	double calculateFog(double dist, double minDist, double maxDist);
 public:
 	Renderer(int width, int height, Model* model);
 	void update(float dt);
