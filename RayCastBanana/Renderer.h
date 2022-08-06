@@ -4,6 +4,21 @@
 #include "Model.h"
 #include "m_grid.h"
 
+
+struct Pixel
+{
+	int x;
+	int y;
+	sf::Color color;
+	Pixel(int x, int y, sf::Color color)
+	{
+		this->x = x;
+		this->y = y;
+		this->color = color;
+	}
+};
+
+
 class Renderer
 {
 private:
@@ -18,6 +33,9 @@ private:
 	sf::Image m_pixelBuffer;
 	sf::Texture m_screenTexture;
 	sf::Sprite m_screenSprite;
+
+	std::unordered_map<int, std::vector<Pixel>> m_depthBuffer;
+
 public:
 	int m_width;
 	int m_height;
@@ -28,6 +46,8 @@ private:
 	void drawWorld();
 	void drawObjects();
 	double calculateFog(double dist, double minDist, double maxDist);
+	void clearDepthBuffer();
+	void drawFromDepth();
 
 public:
 	Renderer(int width, int height, Model* model);

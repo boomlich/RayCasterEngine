@@ -4,8 +4,6 @@
 #include "m_grid.h"
 #include "texture_loader.h"
 
-#define PI 3.14159265359
-
 Renderer::Renderer(int width, int height, Model* model) :
 	m_window(sf::VideoMode(width, height), "Banana"),
 	m_model(model)
@@ -40,11 +38,14 @@ void Renderer::update(float dt)
     }
 
 	m_window.clear();
+    clearDepthBuffer();
 
     m_camera.update(m_width, m_height, m_model->getGrid(), m_model->getProps());
     drawWorld();
 	drawObjects();
 
+
+    drawFromDepth();
 
     m_screenTexture.update(m_pixelBuffer);
     m_screenSprite.setTexture(m_screenTexture);
@@ -181,6 +182,9 @@ void Renderer::drawWorld()
         int prevTextureY = -1; // I
 		sf::Color color;
 
+
+        int zDepth = int(ray.wallDist * 100);
+
         // Draw textures
         for (int i = 0; i < (int)drawEnd; ++i)
         {
@@ -209,7 +213,8 @@ void Renderer::drawWorld()
 
             }
             int y = (int)(drawStart + i);
-            m_pixelBuffer.setPixel(x, y, color);
+
+            m_depthBuffer.at(zDepth).push_back(Pixel(x, y, color));
         }
 
 
@@ -303,9 +308,11 @@ void Renderer::drawObjects()
             offsetX = (imgSize - drawEndX) * 0.5;
         }
 
+        int zDepth = int(object.dist * 100);
+
         for (int y = 0; y < drawEndY; ++y)
         {
-	        for (int x = 0; x < imgSize; ++x)
+	        for (int x = 0; x < drawEndX; ++x)
 	        {
                 int tx = int(((x + offsetX) / imgSize) * 32.0);
                 int ty = int(((y + offsetY) / imgSize) * 32.0);
@@ -316,7 +323,7 @@ void Renderer::drawObjects()
                     int xCoord = object.screenX + x - imgSize / 2.0;
                     if (xCoord > -1 && xCoord < m_width)
                     {
-                        m_pixelBuffer.setPixel(xCoord, drawStartY + y, color);
+                        m_depthBuffer.at(zDepth).push_back(Pixel(xCoord, drawStartY + y, color));
                     }
                 }
 	        }
@@ -337,4 +344,25 @@ double Renderer::calculateFog(double dist, double minDist, double maxDist)
         return 0;
 	}
     return 1 - ((dist - minDist) / (maxDist - minDist));
+}
+
+void Renderer::clearDepthBuffer()
+{
+    m_depthBuffer.clear();
+    for (int i = 0; i < 3500; i++)
+    {
+        std::vector<Pixel> empty;
+        m_depthBuffer.insert(std::make_pair(i, empty));
+    }
+}
+
+void Renderer::drawFromDepth()
+{
+	for (int i = m_depthBuffer.size() - 1; i > -1; --i)
+	{
+		for (auto pixel : m_depthBuffer.at(i))
+		{
+            m_pixelBuffer.setPixel(pixel.x, pixel.y, pixel.color);
+		}
+	}
 }

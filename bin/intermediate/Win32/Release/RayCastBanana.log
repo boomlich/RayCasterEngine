@@ -1,32 +1,31 @@
 ﻿  Renderer.cpp
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(27,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(27,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(159,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(159,28): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(167,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(175,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(207,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(206,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(205,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(222,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(225,35): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(228,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(231,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(234,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(235,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(249,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(248,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(247,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(262,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(261,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(260,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(276,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(276,28): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(319,32): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(322,95): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(322,67): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(25,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(25,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(160,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(160,28): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(168,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(176,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(211,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(210,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(209,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(227,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(230,35): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(233,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(236,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(239,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(240,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(254,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(253,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(252,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(267,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(266,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(265,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(280,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(280,28): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(323,32): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(326,85): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   Generating code
-  2 of 556 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+  2 of 778 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
