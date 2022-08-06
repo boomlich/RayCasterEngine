@@ -150,8 +150,6 @@ void Renderer::drawWorld()
     m_pixelBuffer = sf::Image(m_pixelBufferClear);
 
     const int halfH = m_height / 2;
-    const unsigned int textureWidth = m_wallTexture.getSize().x - 1;
-    const unsigned int textureHeight = m_wallTexture.getSize().y - 1;
 
     int cnt = 0;
     int x = 0;
@@ -220,24 +218,32 @@ void Renderer::drawWorld()
 
         // Draw floor & ceiling
         // Position of the camera in z-axis
-        float cameraZ = wallHeight / 2.0f;
+        const float cameraZ = wallHeight / 2.0f;
         int prevTX = -1;
         int prevTY = -1;
+
+        // Angle from x-axis: vector = (1, 0)
+        const float angleXAxis = angleFromXAxis(ray.dirX, ray.dirY);
+
+        // Store sin and cos for the angle to save calculations per pixel
+        const float cosAngle = cos(angleXAxis);
+        const float sinAngle = sin(angleXAxis);
+
+        // Correct for fisheye-effect
+        const float pointDistCorrection = cameraZ / cos(ray.angle);
+        cnt++;
 
         for (int y = drawStart + lineHeight; y < m_height; y++)
         {
             // Offset from the center of the screen.
             float rayCenterOffset = y - halfH;
 
-            // Angle from x-axis: vector = (1, 0)
-            float angleXAxis = angleFromXAxis(ray.dirX, ray.dirY);
-
-            // World distance to the point on the floor. Using cos to correct for fisheye-effect
-            float pointDist = cameraZ / rayCenterOffset / cos(ray.angle);
+            // World distance to the point on the floor
+            float pointDist = pointDistCorrection / rayCenterOffset;
 
             // Coordinates of the point on the floor
-            float floorX = *m_camera.m_posX + cos(angleXAxis) * pointDist;
-            float floorY = *m_camera.m_posY - sin(angleXAxis) * pointDist;
+            float floorX = *m_camera.m_posX + cosAngle * pointDist;
+            float floorY = *m_camera.m_posY - sinAngle * pointDist;
 
             // Texture coordinates
             int tx = int((floorX - (int)floorX) * 32);
@@ -268,26 +274,26 @@ void Renderer::drawWorld()
                     color.a);
             }
             m_pixelBuffer.setPixel(x, m_height - y, color);
-            cnt++;
         }
     	x++;
     }
-    // std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
+    std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
 }
 
 void Renderer::drawObjects()
 {
-    const float wallHeight = m_height * 0.75;
+    const double wallHeight = m_height * 0.75;
 	for (auto object : m_camera.m_renderObj)
 	{
         const double imgSize = wallHeight / object.dist;
+        const double halfImgSize = imgSize * 0.5;
 
         // First pixel in the y-axis to draw
         double drawStartY = (m_height - imgSize) / 2.0;
 		if (drawStartY < 0) drawStartY = 0.0;
 
         // draw start offset if line is higher then screen
-        double offsetY = 0.0f; 
+        double offsetY = 0.0; 
 
         // Last pixel in the y-axis to draw.
         double drawEndY = imgSize;
@@ -298,7 +304,7 @@ void Renderer::drawObjects()
         }
 
         // draw start offset if line is higher then screen
-        double offsetX = 0.0f;
+        double offsetX = 0.0;
 
         // Last pixel in the y-axis to draw.
         double drawEndX = imgSize;
@@ -320,8 +326,8 @@ void Renderer::drawObjects()
                 sf::Color color = object.img.getPixel(tx, ty);
                 if (color.a > 0)
                 {
-                    int xCoord = object.screenX + x - imgSize / 2.0;
-                    if (xCoord > -1 && xCoord < m_width)
+                    int xCoord = object.screenX + x - halfImgSize;
+                    if (xCoord > -1 && xCoord < m_width) // Only draw pixels that are visable
                     {
                         m_depthBuffer.at(zDepth).push_back(Pixel(xCoord, drawStartY + y, color));
                     }

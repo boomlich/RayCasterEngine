@@ -37,6 +37,9 @@
     <Filter Include="Source Files\props">
       <UniqueIdentifier>{9ffca142-e691-4692-b64c-7169eda72ecd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\map\tiles">
+      <UniqueIdentifier>{01172544-84c4-43f2-a9bb-6221649be525}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files\map\tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="RenderObj.h">
       <Filter>Source Files\view\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Source Files\map\tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
