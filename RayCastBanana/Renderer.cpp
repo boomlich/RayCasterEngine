@@ -10,8 +10,8 @@ Renderer::Renderer(int width, int height, Model* model) :
 	m_window(sf::VideoMode(width, height), "Banana"),
 	m_model(model)
 {
-    m_width = width;
-    m_height = height;
+    m_width = 640;
+    m_height = 480;
     m_window.setFramerateLimit(60);
     m_camera.attachToPlayer(*m_model->getPlayer());
     m_window.setMouseCursorVisible(false);
@@ -20,11 +20,11 @@ Renderer::Renderer(int width, int height, Model* model) :
     m_floorTexture = load_img("resources/images/textures/texture_floor_scifi_01.png");
     m_ceilingTexture = load_img("resources/images/textures/texture_ceiling_window_01.png");
 
+    m_pixelBuffer.create(m_width, m_height, sf::Color(255, 255, 255, 255));
+    m_pixelBufferClear.create(m_width, m_height, sf::Color(0, 0, 0, 255));
 
-    m_pixelBuffer.create(width, height, sf::Color(255, 255, 255, 255));
-    m_pixelBufferClear.create(width, height, sf::Color(0, 0, 0, 255));
-
-    m_screenTexture.create(width, height);
+    m_screenTexture.create(m_width, m_height);
+    m_screenSprite.setScale(width / m_width, height / m_height);
 }
 
 void Renderer::update(float dt)
@@ -41,8 +41,16 @@ void Renderer::update(float dt)
 
 	m_window.clear();
 
-    m_camera.update(m_window.getSize().x, m_window.getSize().y, m_model->getGrid());
+    m_camera.update(m_width, m_height, m_model->getGrid(), m_model->getProps());
     drawWorld();
+	drawObjects();
+
+
+    m_screenTexture.update(m_pixelBuffer);
+    m_screenSprite.setTexture(m_screenTexture);
+    m_window.draw(m_screenSprite);
+
+
     drawMinimap(m_model->getGrid(), m_model->getPawn());
 
 	m_window.display();
@@ -140,17 +148,15 @@ void Renderer::drawWorld()
     // Clear pixel buffer
     m_pixelBuffer = sf::Image(m_pixelBufferClear);
 
-    const float screenHeight = (float)m_window.getSize().y;
-    const int halfH = screenHeight / 2;
+    const int halfH = m_height / 2;
     const unsigned int textureWidth = m_wallTexture.getSize().x - 1;
     const unsigned int textureHeight = m_wallTexture.getSize().y - 1;
-
 
     int cnt = 0;
     int x = 0;
 
     // Height of the wall in units
-    const float wallHeight = screenHeight * 0.75;
+    const float wallHeight = m_height * 0.75;
 
     for (auto& ray : m_camera.m_rays)
     {
@@ -158,20 +164,20 @@ void Renderer::drawWorld()
         const float lineHeight = wallHeight / (float)ray.wallDist;
 
         // First pixel in the y-axis to draw
-    	float drawStart = (screenHeight - lineHeight) / 2.0;
+    	float drawStart = (m_height - lineHeight) / 2.0;
         if (drawStart < 0) drawStart = 0.0f;
         float heightOffset = 0.0f; // draw start offset if line is higher then screen
 
         // Last pixel in the y-axis to draw.
         float drawEnd = lineHeight;
-        if (drawEnd > screenHeight)
+        if (drawEnd > m_height)
         {
-            drawEnd = screenHeight;
+            drawEnd = m_height;
             heightOffset = (lineHeight - drawEnd) / 2;
         }
 
-        int textureX = (int)(ray.wallIntersectPoint * (float)(textureWidth));
-        double textureStep = (double)textureHeight / lineHeight;
+        int textureX = (int)(ray.wallIntersectPoint * (float)(32));
+        double textureStep = (double)32.0 / lineHeight;
         int prevTextureY = -1; // I
 		sf::Color color;
 
@@ -180,6 +186,7 @@ void Renderer::drawWorld()
         {
             // Get texture pixel color
             int textureY = int(((float)i + heightOffset) * textureStep);
+
 
             if (textureY > prevTextureY)
             {
@@ -212,7 +219,7 @@ void Renderer::drawWorld()
         int prevTX = -1;
         int prevTY = -1;
 
-        for (int y = drawStart + lineHeight; y < screenHeight; y++)
+        for (int y = drawStart + lineHeight; y < m_height; y++)
         {
             // Offset from the center of the screen.
             float rayCenterOffset = y - halfH;
@@ -255,15 +262,66 @@ void Renderer::drawWorld()
                     color.b * fog,
                     color.a);
             }
-            m_pixelBuffer.setPixel(x, screenHeight - y, color);
+            m_pixelBuffer.setPixel(x, m_height - y, color);
             cnt++;
         }
     	x++;
     }
-    m_screenTexture.update(m_pixelBuffer);
-    // m_screenTexture.setSmooth(true);
-    m_window.draw(sf::Sprite(m_screenTexture));
     // std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
+}
+
+void Renderer::drawObjects()
+{
+    const float wallHeight = m_height * 0.75;
+	for (auto object : m_camera.m_renderObj)
+	{
+        const double imgSize = wallHeight / object.dist;
+
+        // First pixel in the y-axis to draw
+        double drawStartY = (m_height - imgSize) / 2.0;
+		if (drawStartY < 0) drawStartY = 0.0;
+
+        // draw start offset if line is higher then screen
+        double offsetY = 0.0f; 
+
+        // Last pixel in the y-axis to draw.
+        double drawEndY = imgSize;
+        if (drawEndY > m_height)
+        {
+            drawEndY = m_height;
+            offsetY = (imgSize - drawEndY) * 0.5;
+        }
+
+        // draw start offset if line is higher then screen
+        double offsetX = 0.0f;
+
+        // Last pixel in the y-axis to draw.
+        double drawEndX = imgSize;
+        if (drawEndX > m_width)
+        {
+            drawEndX = m_width;
+            offsetX = (imgSize - drawEndX) * 0.5;
+        }
+
+        for (int y = 0; y < drawEndY; ++y)
+        {
+	        for (int x = 0; x < imgSize; ++x)
+	        {
+                int tx = int(((x + offsetX) / imgSize) * 32.0);
+                int ty = int(((y + offsetY) / imgSize) * 32.0);
+
+                sf::Color color = object.img.getPixel(tx, ty);
+                if (color.a > 0)
+                {
+                    int xCoord = object.screenX + x - imgSize / 2.0;
+                    if (xCoord > -1 && xCoord < m_width)
+                    {
+                        m_pixelBuffer.setPixel(xCoord, drawStartY + y, color);
+                    }
+                }
+	        }
+        }
+	}
 }
 
 // Calculate the amount of fog depending on the distance. Linear iterperted.
@@ -278,6 +336,5 @@ double Renderer::calculateFog(double dist, double minDist, double maxDist)
 	{
         return 0;
 	}
-
     return 1 - ((dist - minDist) / (maxDist - minDist));
 }

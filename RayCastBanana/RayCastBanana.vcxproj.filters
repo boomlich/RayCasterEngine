@@ -34,6 +34,9 @@
     <Filter Include="Source Files\view\camera">
       <UniqueIdentifier>{5f349f58-95cf-4d69-82e6-88444e8e8b23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\props">
+      <UniqueIdentifier>{9ffca142-e691-4692-b64c-7169eda72ecd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -58,6 +61,15 @@
       <Filter>Source Files\model</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Source Files\map\grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Prop.cpp">
+      <Filter>Source Files\props</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files\model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,6 +111,18 @@
       <Filter>Source Files\model</Filter>
     </ClInclude>
     <ClInclude Include="Ray.h">
+      <Filter>Source Files\view\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Source Files\map\grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Prop.h">
+      <Filter>Source Files\props</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Source Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObj.h">
       <Filter>Source Files\view\camera</Filter>
     </ClInclude>
   </ItemGroup>

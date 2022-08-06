@@ -26,7 +26,9 @@ public:
 private:
 	void drawMinimap(Grid& grid, CtrlPawn* player);
 	void drawWorld();
+	void drawObjects();
 	double calculateFog(double dist, double minDist, double maxDist);
+
 public:
 	Renderer(int width, int height, Model* model);
 	void update(float dt);

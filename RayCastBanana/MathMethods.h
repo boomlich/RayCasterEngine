@@ -47,3 +47,8 @@ inline double angleFromXAxis(double x, double y)
 	}
 	return angle;
 }
+
+// Return true if point C is to the left of the line (A, B)
+inline bool isLeft(double xA, double yA, double xB, double yB, double xC, double yC) {
+	return ((xB - xA) * (yC - yA) - (yB - yA) * (xC - xA)) > 0;
+}

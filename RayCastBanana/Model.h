@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <SFML/System/Vector2.hpp>
 
+#include "EntityManager.h"
 #include "MapParser.h"
 #include "Player.h"
 #include "Renderable.h"
@@ -11,6 +11,7 @@ private:
 	Player m_player;
 	MapParser m_mapParser;
 	Grid m_grid;
+	EntityManager m_entityManager;
 
 private:
 	void loadLevel();
@@ -21,4 +22,5 @@ public:
 	Grid& getGrid();
 	void update(float dt);
 	Player* getPlayer();
+	std::vector<Prop> getProps();
 };
