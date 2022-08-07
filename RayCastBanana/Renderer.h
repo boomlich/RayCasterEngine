@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "m_grid.h"
+#include "UIManager.h"
 
 
 struct Pixel
@@ -36,6 +37,8 @@ private:
 
 	std::unordered_map<int, std::vector<Pixel>> m_depthBuffer;
 
+	UIManager m_uiManager;
+
 public:
 	int m_width;
 	int m_height;
@@ -48,10 +51,11 @@ private:
 	double calculateFog(double dist, double minDist, double maxDist);
 	void clearDepthBuffer();
 	void drawFromDepth();
+	void addShapeToPixelBuffer(sf::RectangleShape &shape, double posX, double posY, sf::Color color);
 
 public:
 	Renderer(int width, int height, Model* model);
-	void update(float dt);
+	void update(sf::Time dt);
 	sf::Vector2i getWindowPosition();
 	int getWidth();
 	int getHeight();

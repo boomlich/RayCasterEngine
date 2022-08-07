@@ -17,9 +17,10 @@ void Controller::gameLoop()
 	sf::Clock clock;
 	while (true)
 	{
-		m_dt = clock.restart().asSeconds();
+		sf::Time time = clock.restart();
+		m_dt = time.asSeconds();
 		keyboardInput();
-		m_renderer->update(m_dt);
+		m_renderer->update(time);
 		m_model->update(m_dt);
 	}
 }
@@ -55,14 +56,15 @@ void Controller::keyboardInput()
 		exit(3);
 	}
 
-	int newMouseX = sf::Mouse::getPosition().x;
+	// Lock the mouse in center of screen
+	/*int newMouseX = sf::Mouse::getPosition().x;
 	m_pawn->rotate((newMouseX - oldMouseX) * m_dt * 0.25);
 	sf::Mouse::setPosition(sf::Vector2i(
 		m_renderer->getWindowPosition().x + m_renderer->getWidth() / 2,
 		m_renderer->getWindowPosition().y + m_renderer->getHeight() / 2
 	));
 
-	oldMouseX = sf::Mouse::getPosition().x;
+	oldMouseX = sf::Mouse::getPosition().x;*/
 	
 }
 

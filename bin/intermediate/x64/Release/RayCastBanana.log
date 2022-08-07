@@ -1,0 +1,92 @@
+﻿  Camera.cpp
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Camera.cpp(140,62): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Cell.cpp
+  Controller.cpp
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Controller.cpp(24,19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Door.cpp
+  EntityManager.cpp
+  Model.cpp
+  m_grid.cpp
+  Main.cpp
+  MapParser.cpp
+  Player.cpp
+  Prop.cpp
+  Renderer.cpp
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(28,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(28,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(88,40): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(89,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(176,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(176,28): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(184,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(192,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(226,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(225,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(224,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(243,48): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(243,32): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(250,51): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(250,41): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(253,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(256,35): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(262,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(263,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(277,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(276,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(275,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(290,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(289,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(288,29): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(346,32): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(349,85): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\RayCastBanana\Renderer.cpp(384,2): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+Camera.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Image::~Image(void)" (??1Image@sf@@QEAA@XZ)
+Camera.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Image::Image(void)" (??0Image@sf@@QEAA@XZ)
+Controller.obj : error LNK2001: unresolved external symbol "public: class sf::Time __cdecl sf::Clock::restart(void)" (?restart@Clock@sf@@QEAA?AVTime@2@XZ)
+Controller.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Clock::Clock(void)" (??0Clock@sf@@QEAA@XZ)
+Controller.obj : error LNK2001: unresolved external symbol "public: float __cdecl sf::Time::asSeconds(void)const " (?asSeconds@Time@sf@@QEBAMXZ)
+Controller.obj : error LNK2001: unresolved external symbol "public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z)
+Controller.obj : error LNK2001: unresolved external symbol "public: static void __cdecl sf::Mouse::setPosition(class sf::Vector2<int> const &)" (?setPosition@Mouse@sf@@SAXAEBV?$Vector2@H@2@@Z)
+Controller.obj : error LNK2001: unresolved external symbol "public: static class sf::Vector2<int> __cdecl sf::Mouse::getPosition(void)" (?getPosition@Mouse@sf@@SA?AV?$Vector2@H@2@XZ)
+Main.obj : error LNK2001: unresolved external symbol "public: virtual __cdecl sf::Transformable::~Transformable(void)" (??1Transformable@sf@@UEAA@XZ)
+Main.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Texture::~Texture(void)" (??1Texture@sf@@QEAA@XZ)
+Main.obj : error LNK2001: unresolved external symbol "public: virtual __cdecl sf::RenderWindow::~RenderWindow(void)" (??1RenderWindow@sf@@UEAA@XZ)
+MapParser.obj : error LNK2001: unresolved external symbol "public: class sf::Color __cdecl sf::Image::getPixel(unsigned int,unsigned int)const " (?getPixel@Image@sf@@QEBA?AVColor@2@II@Z)
+MapParser.obj : error LNK2001: unresolved external symbol "public: class sf::Vector2<unsigned int> __cdecl sf::Image::getSize(void)const " (?getSize@Image@sf@@QEBA?AV?$Vector2@I@2@XZ)
+MapParser.obj : error LNK2001: unresolved external symbol "public: bool __cdecl sf::Image::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadFromFile@Image@sf@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: static class sf::RenderStates const sf::RenderStates::Default" (?Default@RenderStates@sf@@2V12@B)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::CircleShape::CircleShape(float,unsigned __int64)" (??0CircleShape@sf@@QEAA@M_K@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Time::Time(void)" (??0Time@sf@@QEAA@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Transformable::setScale(float,float)" (?setScale@Transformable@sf@@QEAAXMM@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Transformable::setPosition(float,float)" (?setPosition@Transformable@sf@@QEAAXMM@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Texture::update(class sf::Image const &)" (?update@Texture@sf@@QEAAXAEBVImage@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: bool __cdecl sf::Texture::create(unsigned int,unsigned int)" (?create@Texture@sf@@QEAA_NII@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Texture::Texture(void)" (??0Texture@sf@@QEAA@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::RenderWindow::RenderWindow(class sf::VideoMode,class sf::String const &,unsigned int,struct sf::ContextSettings const &)" (??0RenderWindow@sf@@QEAA@VVideoMode@1@AEBVString@1@IAEBUContextSettings@1@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Color::Color(void)" (??0Color@sf@@QEAA@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (??0Color@sf@@QEAA@EEEE@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Vertex::Vertex(class sf::Vector2<float> const &)" (??0Vertex@sf@@QEAA@AEBV?$Vector2@M@1@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Image::setPixel(unsigned int,unsigned int,class sf::Color const &)" (?setPixel@Image@sf@@QEAAXIIAEBVColor@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Image::create(unsigned int,unsigned int,class sf::Color const &)" (?create@Image@sf@@QEAAXIIAEBVColor@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Window::display(void)" (?display@Window@sf@@QEAAXXZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Window::setFramerateLimit(unsigned int)" (?setFramerateLimit@Window@sf@@QEAAXI@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Window::setMouseCursorVisible(bool)" (?setMouseCursorVisible@Window@sf@@QEAAX_N@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: class sf::Vector2<int> __cdecl sf::Window::getPosition(void)const " (?getPosition@Window@sf@@QEBA?AV?$Vector2@H@2@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: bool __cdecl sf::Window::pollEvent(class sf::Event &)" (?pollEvent@Window@sf@@QEAA_NAEAVEvent@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Window::close(void)" (?close@Window@sf@@QEAAXXZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::RenderTarget::draw(class sf::Drawable const &,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXAEBVDrawable@2@AEBVRenderStates@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::RenderTarget::draw(class sf::Vertex const *,unsigned __int64,enum sf::PrimitiveType,class sf::RenderStates const &)" (?draw@RenderTarget@sf@@QEAAXPEBVVertex@2@_KW4PrimitiveType@2@AEBVRenderStates@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::RenderTarget::clear(class sf::Color const &)" (?clear@RenderTarget@sf@@QEAAXAEBVColor@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Shape::setFillColor(class sf::Color const &)" (?setFillColor@Shape@sf@@QEAAXAEBVColor@2@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: virtual __cdecl sf::Shape::~Shape(void)" (??1Shape@sf@@UEAA@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::String::String(char const *,class std::locale const &)" (??0String@sf@@QEAA@PEBDAEBVlocale@std@@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::RectangleShape::RectangleShape(class sf::Vector2<float> const &)" (??0RectangleShape@sf@@QEAA@AEBV?$Vector2@M@1@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::VideoMode::VideoMode(unsigned int,unsigned int,unsigned int)" (??0VideoMode@sf@@QEAA@III@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: void __cdecl sf::Sprite::setTexture(class sf::Texture const &,bool)" (?setTexture@Sprite@sf@@QEAAXAEBVTexture@2@_N@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "public: __cdecl sf::Sprite::Sprite(void)" (??0Sprite@sf@@QEAA@XZ)
+Renderer.obj : error LNK2001: unresolved external symbol "void __cdecl ImGui::SFML::Update(class sf::RenderWindow &,class sf::Time)" (?Update@SFML@ImGui@@YAXAEAVRenderWindow@sf@@VTime@4@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "bool __cdecl ImGui::SFML::Init(class sf::RenderWindow &,bool)" (?Init@SFML@ImGui@@YA_NAEAVRenderWindow@sf@@_N@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "void __cdecl ImGui::SFML::Render(class sf::RenderWindow &)" (?Render@SFML@ImGui@@YAXAEAVRenderWindow@sf@@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "void __cdecl ImGui::SFML::ProcessEvent(class sf::Event const &)" (?ProcessEvent@SFML@ImGui@@YAXAEBVEvent@sf@@@Z)
+Renderer.obj : error LNK2001: unresolved external symbol "void __cdecl ImGui::SFML::Shutdown(void)" (?Shutdown@SFML@ImGui@@YAXXZ)
+C:\Users\th0ma\OneDrive - University of Bergen\Priv\cpp\RayCastBanana\\bin\x64\Release\RayCastBanana.exe : fatal error LNK1120: 49 unresolved externals

@@ -29,7 +29,6 @@ CellState MapParser::parse_color(sf::Color color)
 {
 	const std::string color_value = std::to_string(color.r) + ", " + std::to_string(color.g) + ", " + std::to_string(color.b) + ", " + std::to_string(color.a);
 
-
 	if (color_value == "0, 0, 0, 255") { // Black
 		return WALL1;
 	}

@@ -1,8 +1,12 @@
-﻿#include "Renderer.h"
+﻿#include "imgui.h"
+#include "imgui-SFML.h"
+
+#include "Renderer.h"
 
 #include "MathMethods.h"
 #include "m_grid.h"
 #include "texture_loader.h"
+
 
 Renderer::Renderer(int width, int height, Model* model) :
 	m_window(sf::VideoMode(width, height), "Banana"),
@@ -12,7 +16,7 @@ Renderer::Renderer(int width, int height, Model* model) :
     m_height = 480;
     m_window.setFramerateLimit(60);
     m_camera.attachToPlayer(*m_model->getPlayer());
-    m_window.setMouseCursorVisible(false);
+    //m_window.setMouseCursorVisible(false);
 
 	m_wallTexture = load_img("resources/images/textures/t_wall_spaceship_01.png");
     m_floorTexture = load_img("resources/images/textures/texture_floor_scifi_01.png");
@@ -23,19 +27,27 @@ Renderer::Renderer(int width, int height, Model* model) :
 
     m_screenTexture.create(m_width, m_height);
     m_screenSprite.setScale(width / m_width, height / m_height);
+    ImGui::SFML::Init(m_window);
 }
 
-void Renderer::update(float dt)
+void Renderer::update(sf::Time dt)
 {
+    sf::Time deltaTime;
+
+
     sf::Event event;
     while (m_window.pollEvent(event))
     {
+        ImGui::SFML::ProcessEvent(event);
         if (event.type == sf::Event::Closed)
         {
+            
             m_window.close();
+            ImGui::SFML::Shutdown();
             exit(1);
         }
     }
+	ImGui::SFML::Update(m_window, dt);
 
 	m_window.clear();
     clearDepthBuffer();
@@ -54,6 +66,9 @@ void Renderer::update(float dt)
 
     drawMinimap(m_model->getGrid(), m_model->getPawn());
 
+    m_uiManager.update();
+
+    ImGui::SFML::Render(m_window);
 	m_window.display();
 }
 
@@ -92,6 +107,8 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
     bg.setFillColor(sf::Color(155, 173, 183, 255));
     m_window.draw(bg);
 
+    int cnt = 0;
+
 	for (int y = 0; y < gridHeight; ++y)
 	{
 		for (int x = 0; x < gridWidth; ++x)
@@ -110,6 +127,8 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
             }
             cell.setFillColor(color);
             m_window.draw(cell);
+
+            cnt++;
 		}
 	}
 
@@ -133,6 +152,7 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
             sf::Vertex(sf::Vector2f(dirEndX, dirEndY))
         };
         m_window.draw(line, 2, sf::Lines);
+        cnt++;
 	}
 
     // Draw circle
@@ -142,6 +162,8 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
     playerDot.setPosition(mapPosX - dotRadius, mapPosY - dotRadius);
     playerDot.setFillColor(color);
     m_window.draw(playerDot);
+    cnt++;
+    // std::cout << "Minimap draw calls: " << cnt << std::endl;
 }
 
 void Renderer::drawWorld()
@@ -188,7 +210,6 @@ void Renderer::drawWorld()
         {
             // Get texture pixel color
             int textureY = int(((float)i + heightOffset) * textureStep);
-
 
             if (textureY > prevTextureY)
             {
@@ -277,7 +298,7 @@ void Renderer::drawWorld()
         }
     	x++;
     }
-    std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
+    // std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
 }
 
 void Renderer::drawObjects()

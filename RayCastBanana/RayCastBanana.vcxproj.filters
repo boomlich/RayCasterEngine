@@ -40,6 +40,9 @@
     <Filter Include="Source Files\map\tiles">
       <UniqueIdentifier>{01172544-84c4-43f2-a9bb-6221649be525}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\view\GUI">
+      <UniqueIdentifier>{1351e9d1-cda9-45a3-8e44-451e639a1145}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -77,6 +80,24 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>Source Files\map\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI-1.88\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI-1.88\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI-1.88\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Source Files\view\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +154,39 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Source Files\map\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imconfig-SFML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imgui-SFML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imgui-SFML_export.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI-1.88\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Source Files\view\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Source Files\view\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
