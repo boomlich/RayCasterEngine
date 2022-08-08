@@ -4,8 +4,8 @@
 #include "Renderer.h"
 
 #include "MathMethods.h"
+#include "mediaManager.h"
 #include "m_grid.h"
-#include "texture_loader.h"
 
 
 Renderer::Renderer(int width, int height, Model* model) :
@@ -18,9 +18,9 @@ Renderer::Renderer(int width, int height, Model* model) :
     m_camera.attachToPlayer(*m_model->getPlayer());
     //m_window.setMouseCursorVisible(false);
 
-	m_wallTexture = load_img("resources/images/textures/t_wall_spaceship_01.png");
-    m_floorTexture = load_img("resources/images/textures/texture_floor_scifi_01.png");
-    m_ceilingTexture = load_img("resources/images/textures/texture_ceiling_window_01.png");
+	m_wallTexture = load_img("resources\\images\\textures\\t_wall_spaceship_01.png");
+    m_floorTexture = load_img("resources\\images\\textures\\texture_floor_scifi_01.png");
+    m_ceilingTexture = load_img("resources\\images\\textures\\texture_ceiling_window_01.png");
 
     m_pixelBuffer.create(m_width, m_height, sf::Color(255, 255, 255, 255));
     m_pixelBufferClear.create(m_width, m_height, sf::Color(0, 0, 0, 255));

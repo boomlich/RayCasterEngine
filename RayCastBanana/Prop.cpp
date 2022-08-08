@@ -1,5 +1,5 @@
 ﻿#include "Prop.h"
-#include "texture_loader.h"
+#include "mediaManager.h"
 
 double Prop::getPosX()
 {

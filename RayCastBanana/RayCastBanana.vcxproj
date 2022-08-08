@@ -160,11 +160,13 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="CellGrid.cpp" />
     <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp" />
     <ClCompile Include="ImGUI-1.88\imgui.cpp" />
     <ClCompile Include="ImGUI-1.88\imgui_draw.cpp" />
     <ClCompile Include="ImGUI-1.88\imgui_tables.cpp" />
     <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp" />
+    <ClCompile Include="mediaManager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="m_grid.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -182,6 +184,7 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="CellGrid.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="ImGUI-1.88\imconfig-SFML.h" />
     <ClInclude Include="ImGUI-1.88\imconfig.h" />
@@ -201,7 +204,7 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderObj.h" />
-    <ClInclude Include="texture_loader.h" />
+    <ClInclude Include="mediaManager.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="UIManager.h" />
   </ItemGroup>

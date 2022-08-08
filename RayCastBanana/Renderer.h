@@ -43,6 +43,7 @@ public:
 	int m_width;
 	int m_height;
 	Model* m_model;
+	static sf::Texture testTX;
 
 private:
 	void drawMinimap(Grid& grid, CtrlPawn* player);

@@ -1,6 +1,7 @@
 ﻿#include "m_grid.h"
 
 #include <iostream>
+#include "CellGrid.h"
 
 Grid::Grid()
 {
