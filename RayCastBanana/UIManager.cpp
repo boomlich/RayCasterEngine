@@ -137,27 +137,28 @@ void UIManager::levelEditor()
     ImGui::Begin("ViewPort", nullptr, windowFlags);
 
     int toolSize = 32;
+
+    EditorMode toolModes[5] = { EDIT_SELECT, EDIT_WALL, EDIT_FLOOR, EDIT_EYEDROPPER, EDIT_OPTIONS };
+    std::string toolNames[] = { "Select", "Wall brush", "Free tool", "Eyedropper", "Options"};
     ImGui::BeginChild("Toolbar", ImVec2(toolSize * 2, 300), true);
     ImGui::Text("Tools");
-    if (ImGui::Button("S", ImVec2(toolSize, toolSize)))
+
+    for (int i = 0; i < 5; ++i)
     {
-        editMode = EDIT_SELECT;
-    }
-    if (ImGui::Button("W", ImVec2(toolSize, toolSize)))
-    {
-        editMode = EDIT_WALL;
-    }
-	if (ImGui::Button("F", ImVec2(toolSize, toolSize)))
-    {
-        editMode = EDIT_FLOOR;
-    }
-    if (ImGui::Button("E", ImVec2(toolSize, toolSize)))
-    {
-        editMode = EDIT_EYEDROPPER;
-    }
-    if (ImGui::Button("O", ImVec2(toolSize, toolSize)))
-    {
-        editMode = EDIT_OPTIONS;
+        int styleCount = 0;
+        if (editMode == toolModes[i])
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(255, 0, 0, 255));
+            styleCount++;
+        }
+        ImGui::PushID(i);
+        if (ImGui::Button("T", ImVec2(toolSize, toolSize))) { editMode = toolModes[i]; }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::SetTooltip(toolNames[i].c_str());
+        }
+        ImGui::PopID();
+        ImGui::PopStyleColor(styleCount);
     }
 
     ImGui::EndChild();
@@ -209,9 +210,19 @@ void UIManager::levelEditor()
                 ImGui::SameLine();
 
             ImGui::PushID(y * gridWidth + x);
-
             Cell *cell = cellGrid.getCell(x, y);
 
+            int styleCount = 0;
+            if (cell == selectedCell)
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 255, 0, 255));
+                styleCount++;
+            }
+        	else if (cell->m_type == CELL_WALL)
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 255));
+                styleCount++;
+            }
 
             if (ImGui::Button("-", ImVec2(cellSize, cellSize)))
             {
@@ -224,20 +235,17 @@ void UIManager::levelEditor()
             	else if (editMode == EDIT_WALL)
                 {
                     cell->m_type = CELL_WALL;
-
                     cell->m_textures[0] = brush.textures[0];
                     cell->m_textures[1] = brush.textures[1];
                     cell->m_textures[2] = brush.textures[2];
                     cell->m_textures[3] = brush.textures[3];
-
                 }
             	else if (editMode == EDIT_SELECT)
                 {
                     selectedCell = cell;
                 }
             }
-
-
+            ImGui::PopStyleColor(styleCount);
             ImGui::PopID();
         }
     ImGui::PopStyleVar();
