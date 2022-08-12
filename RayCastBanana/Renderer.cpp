@@ -198,7 +198,7 @@ void Renderer::drawWorld()
         }
 
         int textureX = (int)(ray.wallIntersectPoint * (float)(32));
-        double textureStep = (double)32.0 / lineHeight;
+        double textureStep = (double)31.0 / lineHeight;
         int prevTextureY = -1; // I
 		sf::Color color;
 
@@ -215,8 +215,10 @@ void Renderer::drawWorld()
             {
                 prevTextureY = textureY;
 
+                //std::cout << textureX << " : " << textureY << std::endl;
                 // Get color of the texture pixel
                 color = m_wallTexture.getPixel(textureX, textureY);
+                // color = sf::Color(255, 255, 0, 255);
                 if (ray.verticleWall)
                 {
                     color = sf::Color(color.r / 2, color.g / 2, color.b / 2, color.a);
@@ -233,12 +235,12 @@ void Renderer::drawWorld()
             }
             int y = (int)(drawStart + i);
 
-            m_depthBuffer.at(zDepth).push_back(Pixel(x, y, color));
+            m_depthBuffer.at(zDepth).emplace_back(Pixel(x, y, color));
         }
 
 
         // Draw floor & ceiling
-        // Position of the camera in z-axis
+    	// Position of the camera in z-axis
         const float cameraZ = wallHeight / 2.0f;
         int prevTX = -1;
         int prevTY = -1;
@@ -298,7 +300,6 @@ void Renderer::drawWorld()
         }
     	x++;
     }
-    // std::cout << "NUMBER OF PIXELS DRAWN: " << cnt << std::endl;
 }
 
 void Renderer::drawObjects()

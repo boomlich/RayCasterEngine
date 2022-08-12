@@ -96,14 +96,14 @@
     <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Source Files\view\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="CellGrid.cpp">
       <Filter>Source Files\map\grid</Filter>
     </ClCompile>
     <ClCompile Include="mediaManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Source Files\view\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

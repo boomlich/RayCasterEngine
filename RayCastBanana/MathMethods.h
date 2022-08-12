@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <SFML/System/Vector2.hpp>
+#include <sstream>
 
 inline double vectorLength(double x, double y)
 {
@@ -51,4 +52,11 @@ inline double angleFromXAxis(double x, double y)
 // Return true if point C is to the left of the line (A, B)
 inline bool isLeft(double xA, double yA, double xB, double yB, double xC, double yC) {
 	return ((xB - xA) * (yC - yA) - (yB - yA) * (xC - xA)) > 0;
+}
+
+inline std::string convertToHexString(int x)
+{
+	std::stringstream sstream;
+	sstream << std::hex << x;
+	return sstream.str();
 }

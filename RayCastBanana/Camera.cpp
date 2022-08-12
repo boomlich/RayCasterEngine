@@ -115,7 +115,7 @@ void Camera::update(int screenWidth, int screenHeight, Grid& grid, std::vector<P
 			wallIntersectPoint = (*m_posX + unitDir.x * rayLength) - (double)mapX;
 		}
 
-		m_rays.push_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall, angle));
+		m_rays.emplace_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall, angle));
 	}
 
 	// Raycast props
@@ -137,6 +137,6 @@ void Camera::update(int screenWidth, int screenHeight, Grid& grid, std::vector<P
 		// Perpendicular distance to the object from the camera
 		double perpDist = propWorldDist * cos(propAngle);
 
-		m_renderObj.push_back(RenderObj(prop.getImage(), perpDist, projectonX));
+		// m_renderObj.push_back(RenderObj(prop.getImage(), perpDist, projectonX));
 	}
 }

@@ -11,14 +11,30 @@ double Prop::getPosY()
 	return m_posY;
 }
 
-sf::Image Prop::getImage()
+void Prop::setPosX(double x)
 {
-	return m_img;
+	m_posX = x;
 }
 
-Prop::Prop(std::string path, double x, double y)
+void Prop::setPosY(double y)
 {
-	m_img = load_img(path);
+	m_posY = y;
+}
+
+
+TextureID Prop::getTextureID()
+{
+	return m_txID;
+}
+
+ContentID& Prop::getContentID()
+{
+	return m_contentID;
+}
+
+Prop::Prop(TextureID txID, ContentID contentID, double x, double y) : m_contentID(contentID)
+{
+	m_txID = txID;
 	m_posX = x;
 	m_posY = y;
 }

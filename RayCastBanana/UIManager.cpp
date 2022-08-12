@@ -1,17 +1,16 @@
 ﻿#include "UIManager.h"
-
+#include "mediaManager.h"
 #include <imgui.h>
-#include "imgui-SFML.h"
+#include <imgui-SFML.h>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 #include "Cell.h"
 #include "CellGrid.h"
 #include "Renderer.h"
-#include "mediaManager.h"
+
+
 
 
 
@@ -19,9 +18,17 @@ UIManager::UIManager()
 {
     m_uiState = UI_LEVEL_EDITOR;
 
-    contentTextures.emplace_back(Content("Big panels - 01", TX_WALL_SCIFI_01, C_TEXTURE, C_Cat_TX_WALL));
+    contentTextures.emplace_back(Content("Big panels - 01", TX_WALL_SCIFI_01, C_TEXTURE, C_CAT_TX_WALL));
     contentTextures.emplace_back(Content("Pathway - 01", TX_FLOOR_SCIFI_01, C_TEXTURE, C_CAT_TX_FLOOR));
     contentTextures.emplace_back(Content("Bright window - 01", TX_CEILING_SCIFI_01, C_TEXTURE, C_CAT_TX_CEILING));
+    contentTextures.emplace_back(Content("Big barell - 01", TX_PR_BOX_01, C_PROP, C_CAT_PR_BOX, C_ID_PR_BOX_01));
+
+    loadedTextures.insert(std::make_pair(TX_WALL_SCIFI_01, load_texture("resources\\images\\textures\\t_wall_spaceship_01.png")));
+    loadedTextures.insert(std::make_pair(TX_FLOOR_SCIFI_01, load_texture("resources\\images\\textures\\texture_floor_scifi_01.png")));
+    loadedTextures.insert(std::make_pair(TX_CEILING_SCIFI_01, load_texture("resources\\images\\textures\\texture_ceiling_window_01.png")));
+    loadedTextures.insert(std::make_pair(TX_PR_BOX_01, load_texture("resources\\images\\textures\\props\\texture_prop_crate_01.png")));
+
+
 }
 
 void UIManager::update()
@@ -116,25 +123,22 @@ void UIManager::levelEditor()
 
 
     static CellGrid cellGrid(gridWidth, gridHeight);
-    //static Cell selectedCell(CELL_DISABLED, 0, 0);
-    static Cell *selectedCell = nullptr;
 
     if (editMode != EDIT_SELECT)
     {
-        selectedCell = nullptr;
+        deselect();
     }
 
     static Brush brush;
 
-
-
     const ImGuiWindowFlags windowFlags =
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
         ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-        ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollWithMouse;
+        ImGuiWindowFlags_NoDecoration;
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::SetNextWindowSize(ImVec2(640, 480));
     ImGui::Begin("ViewPort", nullptr, windowFlags);
+
 
     int toolSize = 32;
 
@@ -173,18 +177,22 @@ void UIManager::levelEditor()
 	ImGui::BeginChild("Map", ImVec2(gridSizePx, 325));
     ImGui::Text(title.c_str());
 
-    
-
-    
-
     ImGui::BeginChild("MapContainer", ImVec2(gridSizePx, gridSizePx), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset.x);
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offset.y);
-    float viewportX = cellSize * gridWidth + gridWidth * padding;
-    float viewportY = cellSize * gridHeight + gridHeight * padding;
+    float mapWidth = cellSize * gridWidth + gridWidth * padding;
+    float mapHeight = cellSize * gridHeight + gridHeight * padding;
 
-    ImGui::BeginChild("Viewport", ImVec2(viewportX, viewportY), false, ImGuiWindowFlags_NoScrollbar);
+    // Screen coordinates of the top right corner of the map
+    float mapPosX = ImGui::GetCursorScreenPos().x; // screen posX of the map top right corner
+    float mapPosY = ImGui::GetCursorScreenPos().y; // screen posY of the map top right corner
+
+    // Mouse position on the map gri
+    float mouseGridPosX = (ImGui::GetMousePos().x - mapPosX) / mapWidth * (float)gridWidth;
+    float mouseGridPosY = (ImGui::GetMousePos().y - mapPosY) / mapHeight * (float)gridHeight;
+
+    ImGui::BeginChild("Viewport", ImVec2(mapWidth, mapHeight), false, ImGuiWindowFlags_NoScrollbar);
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Middle))
     {
         offset.x += ImGui::GetIO().MouseDelta.x;
@@ -242,13 +250,46 @@ void UIManager::levelEditor()
                 }
             	else if (editMode == EDIT_SELECT)
                 {
+                    deselect();
                     selectedCell = cell;
                 }
             }
+
+            // Placing objects (Props, Enemies, etc.)
+            if (cell->m_type == CELL_FREE)
+            {
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ITEM_DRAG"))
+                    {
+                        IM_ASSERT(payload->DataSize == sizeof(int));
+                        ContentID payload_n = *(const ContentID*)payload->Data;
+
+                    	deselect();
+                        if (payload_n == C_ID_PR_BOX_01)
+                        {
+                            selectedProp = cellGrid.addProp(P_Box_01(mouseGridPosX, mouseGridPosY));
+                        }
+                        editMode = EDIT_SELECT;
+                    }
+
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ITEM_MOVE"))
+                    {
+                        IM_ASSERT(payload->DataSize == sizeof(int));
+                        ContentID payload_n = *(const ContentID*)payload->Data;
+
+                        selectedProp->setPosX(mouseGridPosX);
+                        selectedProp->setPosY(mouseGridPosY);
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+            }
+            
             ImGui::PopStyleColor(styleCount);
             ImGui::PopID();
         }
     ImGui::PopStyleVar();
+
     ImGui::EndChild();
     ImGui::EndChild();
     ImGui::EndChild();
@@ -258,10 +299,12 @@ void UIManager::levelEditor()
     ImGui::Text("Properties");
     ImGui::Spacing();
 
+    // Properties panel
     if (editMode == EDIT_SELECT)
     {
 	    if (selectedCell != nullptr)
 	    {
+            // Selected cell properties
             if (selectedCell->m_type == CELL_WALL)
             {
                 ImGui::Text("Wall cell");
@@ -300,6 +343,7 @@ void UIManager::levelEditor()
                         }
                         ImGui::EndDragDropTarget();
                     }
+
                     ImGui::EndGroup();
                 }
             }
@@ -360,7 +404,6 @@ void UIManager::levelEditor()
         ImGui::Text("Map size:");
         ImGui::SliderInt("Width", &gridWidth, 8, 64);
         ImGui::SliderInt("Height", &gridHeight, 8, 64);
-        // std::cout << ImGui::IsItemActive() << std::endl;
 
         ImGui::Spacing();
         ImGui::Text("Map zoom:");
@@ -390,17 +433,17 @@ void UIManager::levelEditor()
         {
 	        if (ImGui::TreeNode("C_TX_WALL", "Walls"))
 	        {
-                addContentWithCategory(contentTextures, C_Cat_TX_WALL);
+                addContentWithCategory(contentTextures, C_CAT_TX_WALL, "TEXTURE_DRAG");
                 ImGui::TreePop();
 	        }
             if (ImGui::TreeNode("C_TX_FLOOR", "Floors"))
             {
-                addContentWithCategory(contentTextures, C_CAT_TX_FLOOR);
+                addContentWithCategory(contentTextures, C_CAT_TX_FLOOR, "TEXTURE_DRAG");
                 ImGui::TreePop();
             }
             if (ImGui::TreeNode("C_TX_CEILING", "Ceilings"))
             {
-                addContentWithCategory(contentTextures, C_CAT_TX_CEILING);
+                addContentWithCategory(contentTextures, C_CAT_TX_CEILING, "TEXTURE_DRAG");
                 ImGui::TreePop();
             }
             if (ImGui::TreeNode("C_TX_DECAL", "Decals"))
@@ -408,7 +451,6 @@ void UIManager::levelEditor()
                 ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
                 ImGui::TreePop();
             }
-
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Doors"))
@@ -418,7 +460,11 @@ void UIManager::levelEditor()
         }
         if (ImGui::BeginTabItem("Props"))
         {
-            ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+            if (ImGui::TreeNode("C_PR_BOXES", "Boxes"))
+            {
+                addContentWithCategory(contentTextures, C_CAT_PR_BOX, "ITEM_DRAG");
+                ImGui::TreePop();
+            }
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Enemies"))
@@ -436,11 +482,63 @@ void UIManager::levelEditor()
 
     ImGui::EndChild();
 
+
+    ImGui::GetForegroundDrawList()->AddLine(ImVec2(0, 0), ImVec2(80, 100), ImGui::GetColorU32(ImGuiCol_Button), 4.0f);
+    // ImGui::GetForegroundDrawList()->AddCircleFilled(ImVec2(100, 100), 20, ImGui::GetColorU32(ImVec4(0, 255, 0, 255)), 32);
+
+    // Display all props on the grid
+    int i = 0;
+    for (auto item : cellGrid.getAllProps())
+    {
+        float x = (item.getPosX() * mapWidth) / gridWidth + mapPosX;
+        float y = (item.getPosY() * mapHeight) / gridHeight + mapPosY;
+
+        float size = cellSize / 2;
+        std::string itemID = "Interact_prop" + std::to_string(i);
+
+        ImGui::SetCursorPos(ImVec2(x - size / 2, y - size / 2));
+        ImGui::BeginChild(itemID.c_str(), ImVec2(size, size));
+
+        Prop *prop = cellGrid.getProp(i);
+
+        if (prop == selectedProp)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 255, 0, 255));
+        }
+        else
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 255, 255));
+        }
+
+        if (ImGui::Button("-", ImVec2(size, size)))
+        {
+	        if (editMode == EDIT_SELECT)
+	        {
+                deselect();
+                selectedProp = prop;
+	        }
+        }
+
+    	if (ImGui::BeginDragDropSource())
+        {
+            selectedProp = prop;
+            ImGui::SetDragDropPayload("ITEM_MOVE", &item.getContentID(), sizeof(int));
+            ImGui::Image(sf::Sprite(loadedTextures.at(item.getTextureID())), sf::Vector2f(16.0f, 16.0f));
+            ImGui::EndDragDropSource();
+        }
+        ImGui::PopStyleColor();
+        ImGui::EndChild();
+        i++;
+    }
+
+
     ImGui::End();
+
+    std::cout << cellGrid.saveGrid() << std::endl;
 }
 
 
-bool UIManager::addContentWithCategory(std::vector<Content> &content, ContentCategory targetCat)
+bool UIManager::addContentWithCategory(std::vector<Content> &content, ContentCategory targetCat, std::string dropID)
 {
     bool firstAdded = false;
 	for (auto item : content)
@@ -457,7 +555,13 @@ bool UIManager::addContentWithCategory(std::vector<Content> &content, ContentCat
             ImGui::ImageButton(loadedTextures.at(item.txID));
 			if (ImGui::BeginDragDropSource())
 			{
-                ImGui::SetDragDropPayload("TEXTURE_DRAG", &item.txID, sizeof(int));
+				if (item.type == C_TEXTURE)
+				{
+                    ImGui::SetDragDropPayload(dropID.c_str(), &item.txID, sizeof(int));
+				} else
+				{
+                    ImGui::SetDragDropPayload(dropID.c_str(), &item.cID, sizeof(int));
+				}
                 ImGui::Image(sf::Sprite(loadedTextures.at(item.txID)), sf::Vector2f(16.0f, 16.0f));
                 ImGui::EndDragDropSource();
 			}
@@ -467,6 +571,61 @@ bool UIManager::addContentWithCategory(std::vector<Content> &content, ContentCat
 	}
 
     return true;
+}
+
+void UIManager::addObjectToMap(CellGrid& grid,
+    float& mapWidth, float& mapHeight,
+    int& gridWidth, int& gridHeight,
+    float& mapPosX, float& mapPosY,
+    float cellSize
+    )
+{
+    int i = 0;
+	for (auto item : grid.getAllProps())
+	{
+        float x = (item.getPosX() * mapWidth) / gridWidth + mapPosX;
+        float y = (item.getPosY() * mapHeight) / gridHeight + mapPosY;
+
+        float size = cellSize / 2;
+
+        ImGui::SetCursorPos(ImVec2(x - size / 2, y - size / 2));
+        ImGui::BeginChild("Interact_prop" + char(i), ImVec2(size, size));
+        if (&item == selectedProp)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 255, 0, 255));
+        } else
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 255, 255));
+        }
+
+        if (ImGui::Button("-", ImVec2(size, size)))
+        {
+            selectedProp = grid.getProp(i);
+        }
+        ImGui::PopStyleColor();
+        ImGui::EndChild();
+        i++;
+	}
+
+
+	/*for (int i = 0; i < grid.getAllProps().size(); ++i)
+	{
+
+
+        ImGui::SetCursorPos(ImVec2(x, y));
+	    ImGui::BeginChild("TestChild", ImVec2(40, 40));
+	    if (ImGui::Button("InvisB", ImVec2(40, 40)))
+	    {
+	        std::cout << "Circle pressed" << std::endl;
+	    }
+	    ImGui::EndChild();
+	}*/
+}
+
+void UIManager::deselect()
+{
+    selectedCell = nullptr;
+    selectedProp = nullptr;
 }
 
 
