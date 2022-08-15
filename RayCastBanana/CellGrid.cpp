@@ -35,6 +35,21 @@ bool CellGrid::inBounds(int x, int y)
 	return x > -1 && x < m_width && y > -1 && y < m_height;
 }
 
+TextureID CellGrid::getMostCommonTxID(std::unordered_map<TextureID, int> allTxIDCount)
+{
+	TextureID mostCommonTx = TX_WALL_SCIFI_01;
+	int largestNum = 0;
+	for (auto pair : allTxIDCount)
+	{
+		if (pair.second > largestNum)
+		{
+			largestNum = pair.second;
+			mostCommonTx = pair.first;
+		}
+	}
+	return mostCommonTx;
+}
+
 
 
 void CellGrid::resize(int x, int y)
@@ -98,21 +113,18 @@ std::string CellGrid::saveGrid()
 
 	std::string result = std::to_string(vesionID);
 
-	result += "|" + std::to_string(m_width) + "x" + std::to_string(m_height);
+	result += "|" + convertToHexString(m_width) + "x" + convertToHexString(m_height);
 
-	int prevStart = 0;
-	Cell* prevCell = getCell(0);
-
-	bool wallsAdded = false;
-	int wallsInARow = 0;
-	int wallLineStart = 0;
-
+	std::vector<int> innerWallIndexes;
 	std::vector<int> wallIndexes;
 
-
 	std::unordered_map<TextureID, int> txWallCnt;
-	std::vector<int> wallTxIndexes;
-
+	std::unordered_map<int, std::vector<TextureID>> wallTxIndexes = {
+		{0, std::vector<TextureID>()},
+		{1, std::vector<TextureID>()},
+		{2, std::vector<TextureID>()},
+		{3, std::vector<TextureID>()},
+	};
 
 
 	int i = 0;
@@ -124,71 +136,101 @@ std::string CellGrid::saveGrid()
 			Cell* currentCell = getCell(i);
 			bool isWall = currentCell->m_type == CELL_WALL;
 
+			// Find all index's of inner walls (border excluded)
+			if (x > 0 && x < m_width - 1 && y > 0 && y < m_height - 1)
+			{
+				if (isWall) innerWallIndexes.emplace_back(n);
+				n++;
+			}
+
 			if (isWall)
 			{
-				// Find all index's of walls (excluding the borders)
-				if (x > 0 && x < m_width - 1 && y > 0 && y < m_height - 1)
-				{
-					wallIndexes.emplace_back(n);
-					n++;
-				}
-
+				wallIndexes.emplace_back(i);
 				// Count and identify all wall textures
 				for (int j = 0; j < 4; ++j)
 				{
 					TextureID txID = currentCell->m_textures[j];
 					if (txWallCnt.find(txID) == txWallCnt.end()) txWallCnt[txID] = 1;
 					else txWallCnt[txID]++;
-					wallTxIndexes.emplace_back(i);
+					wallTxIndexes.at(j).emplace_back(txID);
 				}
 			}
-			//int numOfTx = 4;
-			//if (!isWall) numOfTx = 2;
-
-			//for (int j = 0; j < numOfTx; ++j)
-			//{
-			//	TextureID txID = currentCell->m_textures[j];
-			//	if (txWallCnt.find(txID) == txWallCnt.end()) txWallCnt[txID] = 1;
-			//	else txWallCnt[txID]++;
-			//}
-
-			//for (auto tx : currentCell->m_textures)
-			//{
-			//	if (txWallCnt.find(tx) == txWallCnt.end()) txWallCnt[tx] = 1;
-			//	else txWallCnt[tx]++;
-			//}
-			
-
-
 			i++;
 		}
 	}
 
-	for (auto pair : txWallCnt)
-	{
-		std::cout << "TX COUNT: " << pair.first << " : " << pair.second << std::endl;
-	}
+	TextureID mostCommonTX = getMostCommonTxID(txWallCnt);
 
-
-	if (!wallIndexes.empty())
+	// Add wall cells
+	if (!innerWallIndexes.empty())
 	{
 		result += "|W:";
 
 		int i = 0;
-		while (i < wallIndexes.size())
+		while (i < innerWallIndexes.size())
 		{
 			int count = 0;
-			while (i + count + 1 < wallIndexes.size())
+			while (i + count + 1 < innerWallIndexes.size())
 			{
-				if (wallIndexes[i + count + 1] - wallIndexes[i + count] > 1) break;
+				if (innerWallIndexes[i + count + 1] - innerWallIndexes[i + count] > 1) break;
 				count++;
 			}
-			result += convertToHexString(wallIndexes[i]);
+			result += convertToHexString(innerWallIndexes[i]);
 			if (count > 0) result += "+" + convertToHexString(count);
 			i += count + 1;
-			if (i < wallIndexes.size()) result += ",";
+			if (i < innerWallIndexes.size()) result += ",";
 		}
 	}
+
+
+	// Add wall texture info
+	result += "|WT:C;" + std::to_string(mostCommonTX); // Add the most common texture
+
+	std::vector<std::vector<std::string>> txInString;
+
+	for (auto pair : wallTxIndexes)
+	{
+		txInString.emplace_back(std::vector<std::string>());
+		
+		unsigned int i = 0;
+		while (i < wallIndexes.size())
+		{
+			if (pair.second[i] == mostCommonTX)
+			{
+				i++;
+				continue;
+			}
+			unsigned int count = 0;
+			while (i + count + 1 < wallIndexes.size())
+			{
+				if (pair.second[i + count] == mostCommonTX) break;
+				if (wallIndexes[i + count + 1] - wallIndexes[i + count] > 1) break;
+				if (pair.second[i + count + 1] != pair.second[i + count]) break;
+				count++;
+			}
+			std::string txSide = convertToHexString(wallIndexes[i]) + ";" + convertToHexString(pair.second[i]);
+			if (count > 0) txSide += "+" + convertToHexString(count);
+			i += count + 1;
+			txInString[pair.first].emplace_back(txSide);
+		}
+	}
+
+	int q = 0;
+	for (auto txSide : txInString)
+	{
+		if (txSide.empty()) continue;
+
+		result += ":" + std::to_string(q) + ":";
+		for (int p = 0; p < txSide.size(); ++p)
+		{
+			result += txSide[p];
+			if (p < txSide.size() - 1) result += ",";
+		}
+		q++;
+	}
+
+
+
 
 	return result;
 }

@@ -14,6 +14,7 @@ private:
 private:
 	void init();
 	bool inBounds(int x, int y);
+	TextureID getMostCommonTxID(std::unordered_map<TextureID, int> allTxIDCount);
 
 
 public:

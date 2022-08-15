@@ -129,7 +129,8 @@ void UIManager::levelEditor()
         deselect();
     }
 
-    static Brush brush;
+    static Brush wallBrush;
+    static Brush freeBrush(TX_FLOOR_SCIFI_01, TX_CEILING_SCIFI_01);
 
     const ImGuiWindowFlags windowFlags =
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
@@ -138,7 +139,6 @@ void UIManager::levelEditor()
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::SetNextWindowSize(ImVec2(640, 480));
     ImGui::Begin("ViewPort", nullptr, windowFlags);
-
 
     int toolSize = 32;
 
@@ -155,12 +155,10 @@ void UIManager::levelEditor()
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(255, 0, 0, 255));
             styleCount++;
         }
+
         ImGui::PushID(i);
-        if (ImGui::Button("T", ImVec2(toolSize, toolSize))) { editMode = toolModes[i]; }
-        if (ImGui::IsItemHovered())
-        {
-            ImGui::SetTooltip(toolNames[i].c_str());
-        }
+        if (ImGui::Button("T", ImVec2(toolSize, toolSize))) editMode = toolModes[i];
+        if (ImGui::IsItemHovered()) ImGui::SetTooltip(toolNames[i].c_str());
         ImGui::PopID();
         ImGui::PopStyleColor(styleCount);
     }
@@ -169,7 +167,6 @@ void UIManager::levelEditor()
 
     ImGui::SameLine();
 
-
     std::string title = "Map Viewport";
 
     static ImVec2 offset(0.0f, 0.0f);
@@ -177,7 +174,8 @@ void UIManager::levelEditor()
 	ImGui::BeginChild("Map", ImVec2(gridSizePx, 325));
     ImGui::Text(title.c_str());
 
-    ImGui::BeginChild("MapContainer", ImVec2(gridSizePx, gridSizePx), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    ImGui::BeginChild("MapContainer", ImVec2(gridSizePx, gridSizePx), false, 
+        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset.x);
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offset.y);
@@ -237,16 +235,12 @@ void UIManager::levelEditor()
                 if (editMode == EDIT_FLOOR)
                 {
                     cell->m_type = CELL_FREE;
-                    cell->m_textures[0] = brush.textures[0];
-                    cell->m_textures[1] = brush.textures[1];
+                    for (int i = 0; i < 2; ++i) cell->m_textures[i] = freeBrush.textures[i];
                 }
             	else if (editMode == EDIT_WALL)
                 {
                     cell->m_type = CELL_WALL;
-                    cell->m_textures[0] = brush.textures[0];
-                    cell->m_textures[1] = brush.textures[1];
-                    cell->m_textures[2] = brush.textures[2];
-                    cell->m_textures[3] = brush.textures[3];
+                    for (int i = 0; i < 4; ++i) cell->m_textures[i] = wallBrush.textures[i];
                 }
             	else if (editMode == EDIT_SELECT)
                 {
@@ -289,7 +283,6 @@ void UIManager::levelEditor()
             ImGui::PopID();
         }
     ImGui::PopStyleVar();
-
     ImGui::EndChild();
     ImGui::EndChild();
     ImGui::EndChild();
@@ -300,105 +293,27 @@ void UIManager::levelEditor()
     ImGui::Spacing();
 
     // Properties panel
+
+    std::string txNamesWall[4] = { "North", "South", "West", "East" };
+    std::string txNamesFree[2] = { "Floor", "Ceiling" };
+
     if (editMode == EDIT_SELECT)
     {
 	    if (selectedCell != nullptr)
 	    {
             // Selected cell properties
             if (selectedCell->m_type == CELL_WALL)
-            {
-                ImGui::Text("Wall cell");
-                ImGui::Text("(%d, %d)", selectedCell->getPosX(), selectedCell->getPosY());
-                ImGui::Spacing();
-                ImGui::Separator();
-                ImGui::Spacing();
-                ImGui::Text("Set textures:");
-
-                std::string names[4] = { "North", "South", "West", "East" };
-
-                for (int i = 0; i < 4; ++i)
-                {
-                    if (i > 0) ImGui::SameLine();
-
-                    TextureID txID = selectedCell->m_textures[i];
-                    sf::Sprite sprite = sf::Sprite(loadedTextures.at(txID));
-                    ImGui::BeginGroup();
-                    ImGui::Text(names[i].c_str());
-                    ImGui::ImageButton(sprite);
-
-                    if (ImGui::BeginDragDropSource())
-                    {
-                        ImGui::SetDragDropPayload("TEXTURE_DRAG", &txID, sizeof(int));
-                        ImGui::Image(sprite, sf::Vector2f(16.0f, 16.0f));
-                        ImGui::EndDragDropSource();
-                    }
-
-                    if (ImGui::BeginDragDropTarget())
-                    {
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG"))
-                        {
-                            IM_ASSERT(payload->DataSize == sizeof(int));
-                            TextureID payload_n = *(const TextureID*)payload->Data;
-                            selectedCell->m_textures[i] = payload_n;
-                        }
-                        ImGui::EndDragDropTarget();
-                    }
-
-                    ImGui::EndGroup();
-                }
-            }
+                addSelectedCellProperties("Wall cell", "Set wall textures:", 4, txNamesWall);
             else if (selectedCell->m_type == CELL_FREE)
-            {
-                ImGui::Text("Free cell");
-                ImGui::Text("(%d, %d)", selectedCell->getPosX(), selectedCell->getPosY());
-            }
+                addSelectedCellProperties("Free cell", "Set textures:", 2, txNamesFree);
 	    }
     }
+
 	else if (editMode == EDIT_WALL)
-    {
+        addBrushProperties("Wall cell brush", 4, txNamesWall, wallBrush.textures);
+    else if (editMode == EDIT_FLOOR)
+        addBrushProperties("Free cell brush", 2, txNamesFree, freeBrush.textures);
 
-        ImGui::Text("Wall brush");
-
-        ImGui::Spacing();
-        ImGui::Separator();
-        ImGui::Spacing();
-
-        ImGui::Text("Set textures:");
-        std::string names[4] = { "North", "South", "West", "East" };
-
-        for (int i = 0; i < 4; ++i)
-        {
-            if (i > 0) ImGui::SameLine();
-
-            TextureID txID = brush.textures[i];
-            sf::Sprite sprite = sf::Sprite(loadedTextures.at(txID));
-            ImGui::BeginGroup();
-            ImGui::Text(names[i].c_str());
-            ImGui::ImageButton(sprite);
-
-            if (ImGui::BeginDragDropSource())
-            {
-                ImGui::SetDragDropPayload("TEXTURE_DRAG", &txID, sizeof(int));
-                ImGui::Image(sprite, sf::Vector2f(16.0f, 16.0f));
-                ImGui::EndDragDropSource();
-            }
-
-            if (ImGui::BeginDragDropTarget())
-            {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG"))
-                {
-                    IM_ASSERT(payload->DataSize == sizeof(int));
-                    TextureID payload_n = *(const TextureID*)payload->Data;
-
-                    brush.textures[i] = payload_n;
-                }
-                ImGui::EndDragDropTarget();
-            }
-
-
-            ImGui::EndGroup();
-        }
-    }
     else if (editMode == EDIT_OPTIONS)
     {
         ImGui::Text("Map size:");
@@ -426,64 +341,29 @@ void UIManager::levelEditor()
     ImGui::BeginChild("contentBrowser", ImVec2(460, 150));
     ImGui::Text("Content Browser");
 
+    ContentCategory txCat[3] = { C_CAT_TX_WALL, C_CAT_TX_FLOOR, C_CAT_TX_CEILING };
+    std::string txCatNames[3] = { "Walls", "Floor", "Ceiling" };
+
     ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
     if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
     {
         if (ImGui::BeginTabItem("Textures"))
         {
-	        if (ImGui::TreeNode("C_TX_WALL", "Walls"))
-	        {
-                addContentWithCategory(contentTextures, C_CAT_TX_WALL, "TEXTURE_DRAG");
-                ImGui::TreePop();
-	        }
-            if (ImGui::TreeNode("C_TX_FLOOR", "Floors"))
-            {
-                addContentWithCategory(contentTextures, C_CAT_TX_FLOOR, "TEXTURE_DRAG");
-                ImGui::TreePop();
-            }
-            if (ImGui::TreeNode("C_TX_CEILING", "Ceilings"))
-            {
-                addContentWithCategory(contentTextures, C_CAT_TX_CEILING, "TEXTURE_DRAG");
-                ImGui::TreePop();
-            }
-            if (ImGui::TreeNode("C_TX_DECAL", "Decals"))
-            {
-                ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
-                ImGui::TreePop();
-            }
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Doors"))
-        {
-            ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
+	        for (int i = 0; i < std::size(txCat); ++i)
+                addContentTree(txCatNames[i], txCat[i], "TEXTURE_DRAG");
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Props"))
         {
-            if (ImGui::TreeNode("C_PR_BOXES", "Boxes"))
-            {
-                addContentWithCategory(contentTextures, C_CAT_PR_BOX, "ITEM_DRAG");
-                ImGui::TreePop();
-            }
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Enemies"))
-        {
-            ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Miscellaneous"))
-        {
-            ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
+            addContentTree("Boxes", C_CAT_PR_BOX, "ITEM_DRAG");
             ImGui::EndTabItem();
         }
         ImGui::EndTabBar();
     }
-
     ImGui::EndChild();
 
 
-    ImGui::GetForegroundDrawList()->AddLine(ImVec2(0, 0), ImVec2(80, 100), ImGui::GetColorU32(ImGuiCol_Button), 4.0f);
+    // ImGui::GetForegroundDrawList()->AddLine(ImVec2(0, 0), ImVec2(80, 100), ImGui::GetColorU32(ImGuiCol_Button), 4.0f);
     // ImGui::GetForegroundDrawList()->AddCircleFilled(ImVec2(100, 100), 20, ImGui::GetColorU32(ImVec4(0, 255, 0, 255)), 32);
 
     // Display all props on the grid
@@ -502,21 +382,14 @@ void UIManager::levelEditor()
         Prop *prop = cellGrid.getProp(i);
 
         if (prop == selectedProp)
-        {
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 255, 0, 255));
-        }
         else
-        {
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 255, 255));
-        }
+
 
         if (ImGui::Button("-", ImVec2(size, size)))
         {
-	        if (editMode == EDIT_SELECT)
-	        {
-                deselect();
-                selectedProp = prop;
-	        }
+	        if (editMode == EDIT_SELECT) deselect(); selectedProp = prop;
         }
 
     	if (ImGui::BeginDragDropSource())
@@ -531,10 +404,12 @@ void UIManager::levelEditor()
         i++;
     }
 
+    if (ImGui::Button("Pr", ImVec2(20, 20)))
+    {
+        std::cout << cellGrid.saveGrid() << std::endl;
+    }
 
     ImGui::End();
-
-    std::cout << cellGrid.saveGrid() << std::endl;
 }
 
 
@@ -606,20 +481,6 @@ void UIManager::addObjectToMap(CellGrid& grid,
         ImGui::EndChild();
         i++;
 	}
-
-
-	/*for (int i = 0; i < grid.getAllProps().size(); ++i)
-	{
-
-
-        ImGui::SetCursorPos(ImVec2(x, y));
-	    ImGui::BeginChild("TestChild", ImVec2(40, 40));
-	    if (ImGui::Button("InvisB", ImVec2(40, 40)))
-	    {
-	        std::cout << "Circle pressed" << std::endl;
-	    }
-	    ImGui::EndChild();
-	}*/
 }
 
 void UIManager::deselect()
@@ -628,6 +489,69 @@ void UIManager::deselect()
     selectedProp = nullptr;
 }
 
+void UIManager::addSelectedCellProperties(std::string name, std::string txTitle, int txCount, std::string txNames[])
+{
+    ImGui::Text(name.c_str());
+    ImGui::Text("(%d, %d)", selectedCell->getPosX(), selectedCell->getPosY());
+
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    ImGui::Text(txTitle.c_str());
+    addPropertiesEditTexture(txCount, txNames, selectedCell->m_textures);
+}
+
+void UIManager::addPropertiesEditTexture(int num, std::string names[], TextureID textures[])
+{
+    for (int i = 0; i < num; ++i)
+    {
+        if (i > 0) ImGui::SameLine();
+
+        TextureID txID = textures[i];
+        sf::Sprite sprite = sf::Sprite(loadedTextures.at(txID));
+        ImGui::BeginGroup();
+        ImGui::Text(names[i].c_str());
+        ImGui::ImageButton(sprite);
+
+        if (ImGui::BeginDragDropSource())
+        {
+            ImGui::SetDragDropPayload("TEXTURE_DRAG", &txID, sizeof(int));
+            ImGui::Image(sprite, sf::Vector2f(16.0f, 16.0f));
+            ImGui::EndDragDropSource();
+        }
+
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG"))
+            {
+                IM_ASSERT(payload->DataSize == sizeof(int));
+                TextureID payload_n = *(const TextureID*)payload->Data;
+                textures[i] = payload_n;
+            }
+            ImGui::EndDragDropTarget();
+        }
+        ImGui::EndGroup();
+    }
+}
+
+void UIManager::addContentTree(std::string name, ContentCategory cat, std::string dropID)
+{
+    std::string id = "C_CAT_" + name;
+    if (ImGui::TreeNode(id.c_str(), name.c_str()))
+    {
+        addContentWithCategory(contentTextures, cat, dropID);
+        ImGui::TreePop();
+    }
+}
+
+void UIManager::addBrushProperties(std::string title, int txCount, std::string txNames[], TextureID tx[4])
+{
+    ImGui::Text(title.c_str());
+    ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+    ImGui::Text("Set brush textures:");
+    addPropertiesEditTexture(txCount, txNames, tx);
+}
 
 void UIManager::profiler()
 {
@@ -637,8 +561,4 @@ void UIManager::profiler()
         ImGuiWindowFlags_NoTitleBar |
         ImGuiWindowFlags_NoResize
     );
-
-
-
-
 }

@@ -65,6 +65,13 @@ enum UIState
 struct Brush
 {
 	TextureID textures[4];
+	Brush(TextureID tx0 = TX_WALL_SCIFI_01, TextureID tx1 = TX_WALL_SCIFI_01, TextureID tx2 = TX_WALL_SCIFI_01, TextureID tx3 = TX_WALL_SCIFI_01)
+	{
+		textures[0] = tx0;
+		textures[1] = tx1;
+		textures[2] = tx2;
+		textures[3] = tx3;
+	}
 };
 
 class UIManager
@@ -84,6 +91,11 @@ private:
 	bool addContentWithCategory(std::vector<Content> &content, ContentCategory targetCat, std::string dropID);
 	void addObjectToMap(CellGrid &grid, float &mapWidth, float &mapHeight, int &gridWidth, int &gridHeight, float &mapPosX, float &mapPosY, float cellSize);
 	void deselect();
+	void addPropertiesEditTexture(int num, std::string names[], TextureID textures[]);
+	void addContentTree(std::string name, ContentCategory cat, std::string dropID);
+	void addBrushProperties(std::string title, int txCount, std::string txNames[], TextureID tx[4]);
+	void addSelectedCellProperties(std::string name, std::string txTitle, int txCount, std::string txNames[]);
+
 public:
 	UIManager();
 	void update();
