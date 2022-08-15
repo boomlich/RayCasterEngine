@@ -15,7 +15,7 @@ private:
 	void init();
 	bool inBounds(int x, int y);
 	TextureID getMostCommonTxID(std::unordered_map<TextureID, int> allTxIDCount);
-
+	std::string getCellTypeTextures(std::unordered_map<int, std::vector<TextureID>> txIndexes, std::vector<int> cellIndexes, TextureID mostCommonTX);
 
 public:
 	CellGrid(int width, int height);

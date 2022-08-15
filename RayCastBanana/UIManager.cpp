@@ -190,22 +190,12 @@ void UIManager::levelEditor()
     float mouseGridPosX = (ImGui::GetMousePos().x - mapPosX) / mapWidth * (float)gridWidth;
     float mouseGridPosY = (ImGui::GetMousePos().y - mapPosY) / mapHeight * (float)gridHeight;
 
-    ImGui::BeginChild("Viewport", ImVec2(mapWidth, mapHeight), false, ImGuiWindowFlags_NoScrollbar);
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Middle))
-    {
-        offset.x += ImGui::GetIO().MouseDelta.x;
-        offset.y += ImGui::GetIO().MouseDelta.y;
-    }
+    // Display names of texture options
+    std::string txNamesWall[4] = { "North", "South", "West", "East" };
+    std::string txNamesFree[2] = { "Floor", "Ceiling" };
 
-    // Viewport zooming
-    zoomLevel += ImGui::GetIO().MouseWheel * 0.1;
-    if (zoomLevel < minZoom)
-    {
-        zoomLevel = minZoom;
-    } else if (zoomLevel > maxZoom)
-    {
-        zoomLevel = maxZoom;
-    }
+    ImGui::BeginChild("Viewport", ImVec2(mapWidth, mapHeight), false, ImGuiWindowFlags_NoScrollbar);
+    
 
     // Viewport grid
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(padding, padding));
@@ -232,6 +222,9 @@ void UIManager::levelEditor()
 
             if (ImGui::Button("-", ImVec2(cellSize, cellSize)))
             {
+
+                
+
                 if (editMode == EDIT_FLOOR)
                 {
                     cell->m_type = CELL_FREE;
@@ -249,9 +242,14 @@ void UIManager::levelEditor()
                 }
             }
 
+            std::string cellTitle = "Wall";
+            int numOfTextures = 4;
+
             // Placing objects (Props, Enemies, etc.)
             if (cell->m_type == CELL_FREE)
             {
+                cellTitle = "Free";
+                numOfTextures = 2;
                 if (ImGui::BeginDragDropTarget())
                 {
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ITEM_DRAG"))
@@ -278,6 +276,26 @@ void UIManager::levelEditor()
                     ImGui::EndDragDropTarget();
                 }
             }
+
+            if (ImGui::IsItemHovered())
+            {
+                const int cellX = static_cast<int>(mouseGridPosX);
+                const int cellY = static_cast<int>(mouseGridPosY);
+                const Cell* hoveredCell = cellGrid.getCell(cellX, cellY);
+
+                ImGui::BeginTooltip();
+                ImGui::Text(cellTitle.c_str());
+                ImGui::Text("(%d, %d)", cellX, cellY);
+
+                ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+
+                for (int i = 0; i < numOfTextures; ++i)
+                {
+                    if (i > 0) ImGui::SameLine();
+                    ImGui::Image(sf::Sprite(loadedTextures.at(hoveredCell->m_textures[i])));
+                }
+                ImGui::EndTooltip();
+            }
             
             ImGui::PopStyleColor(styleCount);
             ImGui::PopID();
@@ -285,7 +303,30 @@ void UIManager::levelEditor()
     ImGui::PopStyleVar();
     ImGui::EndChild();
     ImGui::EndChild();
+
+    if (ImGui::IsWindowHovered(ImGuiFocusedFlags_ChildWindows))
+    {
+        // Viewport zooming
+        zoomLevel += ImGui::GetIO().MouseWheel * 0.1;
+        if (zoomLevel < minZoom)
+        {
+            zoomLevel = minZoom;
+        }
+        else if (zoomLevel > maxZoom)
+        {
+            zoomLevel = maxZoom;
+        }
+
+        if (ImGui::IsMouseDragging(ImGuiMouseButton_Middle))
+        {
+            offset.x += ImGui::GetIO().MouseDelta.x;
+            offset.y += ImGui::GetIO().MouseDelta.y;
+        }
+    }
+
     ImGui::EndChild();
+
+    
 
     ImGui::SameLine();
     ImGui::BeginChild("Properties", ImVec2(200, 300));
@@ -293,10 +334,6 @@ void UIManager::levelEditor()
     ImGui::Spacing();
 
     // Properties panel
-
-    std::string txNamesWall[4] = { "North", "South", "West", "East" };
-    std::string txNamesFree[2] = { "Floor", "Ceiling" };
-
     if (editMode == EDIT_SELECT)
     {
 	    if (selectedCell != nullptr)
@@ -324,6 +361,13 @@ void UIManager::levelEditor()
         ImGui::Text("Map zoom:");
         ImGui::SliderFloat("Level", &zoomLevel, minZoom, maxZoom);
 
+        ImGui::Spacing();
+        ImGui::Text("Position offset:");
+        ImGui::InputFloat("x", &offset.x, 1.0f, 10.0f);
+        ImGui::InputFloat("y", &offset.y, 1.0f, 10.0f);
+
+        ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
+
         if (ImGui::Button("Reset zoom"))
         {
             zoomLevel = 1;
@@ -334,6 +378,8 @@ void UIManager::levelEditor()
             offset.x = 0;
             offset.y = 0;
         }
+
+
     }
 
     ImGui::EndChild();
@@ -359,6 +405,22 @@ void UIManager::levelEditor()
             ImGui::EndTabItem();
         }
         ImGui::EndTabBar();
+    }
+    ImGui::EndChild();
+
+
+    ImGui::SameLine();
+
+    // Play / Save 
+    ImGui::BeginChild("playLevelSection", ImVec2(100, 100));
+    if (ImGui::Button("Save"))
+    {
+        std::cout << cellGrid.saveGrid() << std::endl;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Play"))
+    {
+        std::cout << cellGrid.saveGrid() << std::endl;
     }
     ImGui::EndChild();
 
@@ -404,10 +466,7 @@ void UIManager::levelEditor()
         i++;
     }
 
-    if (ImGui::Button("Pr", ImVec2(20, 20)))
-    {
-        std::cout << cellGrid.saveGrid() << std::endl;
-    }
+    
 
     ImGui::End();
 }
