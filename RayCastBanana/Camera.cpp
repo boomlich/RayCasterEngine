@@ -3,14 +3,12 @@
 #include <iostream>
 
 #include "MathMethods.h"
-#include "Prop.h"
 
 double Camera::angleFromDir(double x, double y, double length)
 {
 	int left = 1;
 	if (isLeft(0.0, 0.0, *m_dirX, *m_dirY, x, y))
 	{
-		
 		left = -1;
 	}
 
@@ -25,10 +23,9 @@ void Camera::attachToPlayer(Player& player)
 	m_dirY = player.getDir().y;
 }
 
-void Camera::update(int screenWidth, int screenHeight, Grid& grid, std::vector<Prop> props)
+void Camera::update(int screenWidth, int screenHeight, Grid& grid)
 {
 	m_rays.clear();
-	m_renderObj.clear();
 
 	planeX = -*m_dirY;
 	planeY = *m_dirX;
@@ -116,27 +113,5 @@ void Camera::update(int screenWidth, int screenHeight, Grid& grid, std::vector<P
 		}
 
 		m_rays.emplace_back(Ray(perpWallDist, wallIntersectPoint, rayDirX, rayDirY, verticleWall, angle));
-	}
-
-	// Raycast props
-	double halfW = screenWidth / 2.0;
-	for (auto prop : props)
-	{
-		double propDirX = prop.getPosX() - *m_posX;
-		double propDirY = prop.getPosY() - *m_posY;
-
-		// euclidean distance to the object
-		double propWorldDist = vectorLength(propDirX, propDirY);
-
-		// Angle from player direction to object
-		double propAngle = angleFromDir(propDirX, propDirY, propWorldDist);
-
-		// Calculate the position of the object on the projection screen
-		double projectonX = halfW - tan(propAngle) * halfW;
-
-		// Perpendicular distance to the object from the camera
-		double perpDist = propWorldDist * cos(propAngle);
-
-		// m_renderObj.push_back(RenderObj(prop.getImage(), perpDist, projectonX));
 	}
 }
