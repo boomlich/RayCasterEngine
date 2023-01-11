@@ -1,20 +1,16 @@
-﻿#include "imgui.h"
-#include "imgui-SFML.h"
-
-#include "Renderer.h"
+﻿#include "Renderer.h"
 
 #include "MathMethods.h"
 #include "mediaManager.h"
 
 
 Renderer::Renderer(int width, int height, Model* model) :
-	m_window(sf::VideoMode(width, height), "Banana"),
-	m_model(model)
-    //m_pixels(width * height, sf::Color::Black)
+    m_window(sf::VideoMode(width, height), "Banana"),
+    m_model(model),
+    m_pixels(width* height, sf::Color::Black)
 {
     m_width = 640;
     m_height = 480;
-    //m_window.setFramerateLimit(60);
     m_camera.attachToPlayer(*m_model->getPlayer());
 
 	m_wallTexture = load_img("resources\\images\\textures\\t_wall_spaceship_01.png");
@@ -26,11 +22,6 @@ Renderer::Renderer(int width, int height, Model* model) :
 
     m_screenTexture.create(m_width, m_height);
     m_screenSprite.setScale(width / m_width, height / m_height);
-    ImGui::SFML::Init(m_window);
-
-
-
-
 
 }
 
@@ -47,10 +38,18 @@ void Renderer::update(sf::Time dt)
         }
     }
 
-	m_window.clear();
-
     m_camera.update(m_width, m_height, m_model->getGrid());
     drawWorld();
+
+    for (int x = 0; x < m_width; x++)
+    {
+        for (size_t y = 0; y < m_height; y++)
+        {
+            m_pixelBuffer.setPixel(x, y, m_pixels[y * m_width + x]);
+        }
+    }
+
+
 
     m_debugInfoTimer -= dt.asMicroseconds();
     if (m_debugInfoTimer <= 0)
@@ -59,10 +58,6 @@ void Renderer::update(sf::Time dt)
         m_debugFrameTime = dt.asMicroseconds();
         m_debugFPS = 1000000 / dt.asMicroseconds();
     }
-
-
-    //std::cout << dt.asMicroseconds() << std::endl;
-
 
     m_screenTexture.update(m_pixelBuffer);
     m_screenSprite.setTexture(m_screenTexture);
@@ -76,14 +71,13 @@ void Renderer::update(sf::Time dt)
 }
 
 void Renderer::debug(sf::Time dt) {
-
     m_debugInfoTimer -= dt.asMicroseconds();
     if (m_debugInfoTimer > 0)
     {
         return;
     }
     m_debugInfoTimer = 1000000;
-    std::cout << "Frametime: " << dt.asMicroseconds() << std::endl;
+    std::cout << "Frametime: " << dt.asMicroseconds() << " us" << std::endl;
     std::cout << "FPS: " << 1000000 / dt.asMicroseconds() << std::endl;
 }
 
@@ -122,8 +116,6 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
     bg.setFillColor(sf::Color(155, 173, 183, 255));
     m_window.draw(bg);
 
-    int cnt = 0;
-
 	for (int y = 0; y < gridHeight; ++y)
 	{
 		for (int x = 0; x < gridWidth; ++x)
@@ -142,8 +134,6 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
             }
             cell.setFillColor(m_color);
             m_window.draw(cell);
-
-            cnt++;
 		}
 	}
 
@@ -167,7 +157,6 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
             sf::Vertex(sf::Vector2f(dirEndX, dirEndY))
         };
         m_window.draw(line, 2, sf::Lines);
-        cnt++;
 	}
 
     // Draw circle
@@ -177,13 +166,10 @@ void Renderer::drawMinimap(Grid& grid, CtrlPawn* player)
     playerDot.setPosition(mapPosX - dotRadius, mapPosY - dotRadius);
     playerDot.setFillColor(m_color);
     m_window.draw(playerDot);
-    cnt++;
 }
 
 void Renderer::drawWorld()
 {
-    // Clear pixel buffer
-    m_pixelBuffer = sf::Image(m_pixelBufferClear);
 
     const int halfH = m_height / 2;
 
@@ -218,37 +204,52 @@ void Renderer::drawWorld()
 
         // Calculate darkness of the pixel based of the distance
         // to the world point to the camera
-        double fog = calculateFog(ray.wallDist, 1, 15);
+        float shading = calculateFog(ray.wallDist, 1, 15);
+        if (ray.verticleWall)
+        {
+            shading = 0.5f;
+        }
+
+
+
+        sf::Uint8 prevR;
+        sf::Uint8 prevG;
+        sf::Uint8 prevB;
 
         // Draw textures
         for (int i = 0; i < (int)drawEnd; ++i)
         {
             // Get texture pixel color
             int textureY = int(((float)i + heightOffset) * textureStep);
+            int y = (int)(drawStart + i);
+
+            int index = y * m_width + x;
 
             // Only calculate new color value if neccesary
-            if (textureY != prevTextureY)
+            // reducing the number of times getPixel is called
+            if (textureY == prevTextureY)
             {
-                prevTextureY = textureY;
-
-                // Get color of the texture pixel
-                m_color = m_wallTexture.getPixel(textureX, textureY);
-                if (ray.verticleWall)
-                {
-                    m_color = sf::Color(m_color.r / 2, m_color.g / 2, m_color.b / 2, m_color.a);
-                }
-
-                // Calculate fog
-                m_color = sf::Color(
-                    m_color.r * fog,
-                    m_color.g * fog,
-                    m_color.b * fog,
-                    m_color.a);
-
+                m_pixels[index].r = prevR;
+                m_pixels[index].g = prevG;
+                m_pixels[index].b = prevB;
+                continue;
             }
-            int y = (int)(drawStart + i);
-            //m_pixels[y * m_width + x] = sf::Color(m_color.r, m_color.g, m_color.b, m_color.a);
-            m_pixelBuffer.setPixel(x, y, m_color);
+
+            // Update color
+            m_color = m_wallTexture.getPixel(textureX, textureY);
+            m_pixels[index].r = m_color.r;
+            m_pixels[index].g = m_color.g;
+            m_pixels[index].b = m_color.b;
+
+            // Cache current colors
+            prevTextureY = textureY;
+            prevR = m_color.r;
+            prevG = m_color.g;
+            prevB = m_color.b;
+
+            m_pixels[index].r *= shading;
+            m_pixels[index].g *= shading;
+            m_pixels[index].b *= shading;
         }
 
 
@@ -267,7 +268,6 @@ void Renderer::drawWorld()
 
         // Correct for fisheye-effect
         const float pointDistCorrection = cameraZ / cos(ray.angle);
-        cnt++;
 
         for (int y = drawStart + lineHeight; y < m_height; y++)
         {
@@ -288,7 +288,7 @@ void Renderer::drawWorld()
             // Draw floor
             if (tx != prevTX && ty != prevTY)
             {
-                fog = calculateFog(pointDist, 1, 15);
+                float fog = calculateFog(pointDist, 1, 15);
                 m_color = m_floorTexture.getPixel(tx, ty);
                 m_color = sf::Color(
                     m_color.r * fog,
@@ -296,12 +296,12 @@ void Renderer::drawWorld()
                     m_color.b * fog,
                     m_color.a);
             }
-            m_pixelBuffer.setPixel(x, y, m_color);
+            //m_pixelBuffer.setPixel(x, y, m_color);
 
             // Draw ceiling
             if (tx != prevTX && ty != prevTY)
             {
-                fog = calculateFog(pointDist, 1, 15);
+                float fog = calculateFog(pointDist, 1, 15);
                 m_color = m_ceilingTexture.getPixel(tx, ty);
                 m_color = sf::Color(
                     m_color.r * fog,
@@ -309,7 +309,7 @@ void Renderer::drawWorld()
                     m_color.b * fog,
                     m_color.a);
             }
-            m_pixelBuffer.setPixel(x, m_height - y, m_color);
+            //m_pixelBuffer.setPixel(x, m_height - y, m_color);
         }
     	x++;
     }

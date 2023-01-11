@@ -33,12 +33,10 @@ private:
 	sf::Image m_pixelBuffer;
 	sf::Texture m_screenTexture;
 	sf::Sprite m_screenSprite;
-
 	sf::Color m_color;
 
-	std::unordered_map<int, std::vector<Pixel>> m_depthBuffer;
-
 	std::vector<sf::Color> m_pixels;
+
 	int m_debugInfoTimer = 1000000;
 	int m_debugFPS;
 	int m_debugFrameTime;

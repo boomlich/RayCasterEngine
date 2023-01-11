@@ -19,9 +19,6 @@ enum TextureID
 	TX_PR_BOX_01
 };
 
-//extern std::unordered_map<TextureID, sf::Image> loadedImages;
-//extern std::unordered_map<TextureID, sf::Texture> loadedTextures;
-
 inline sf::Texture load_texture(const std::string& path)
 {
 	std::cout << path << std::endl;

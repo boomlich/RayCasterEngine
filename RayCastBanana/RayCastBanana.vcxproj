@@ -158,11 +158,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_draw.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_tables.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp" />
     <ClCompile Include="mediaManager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="grid.cpp" />

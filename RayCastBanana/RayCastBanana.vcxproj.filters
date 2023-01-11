@@ -34,9 +34,6 @@
     <Filter Include="Source Files\view\camera">
       <UniqueIdentifier>{5f349f58-95cf-4d69-82e6-88444e8e8b23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\view\GUI">
-      <UniqueIdentifier>{1351e9d1-cda9-45a3-8e44-451e639a1145}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -65,21 +62,6 @@
     </ClCompile>
     <ClCompile Include="Cell.cpp">
       <Filter>Source Files\map\grid</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mediaManager.cpp">
       <Filter>Source Files</Filter>
