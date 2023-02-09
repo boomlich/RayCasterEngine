@@ -1,0 +1,251 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.34.31937.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/raycastbanana/m_grid.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "c1b7ef2aae5b2fca750bbf8aeac328e92e630141e0d929487ba694479bdeac79"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/raycastbanana/m_grid.h"
+          },
+          "hashes": {
+            "sha-256": "75ff2528efd18a4390d4679aaa0cf14a40a7003989ec172024bc00c61158d4da"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system.hpp"
+          },
+          "hashes": {
+            "sha-256": "e63ba5dd95c943b4ff29d1c3828bae8b27e413490ac2288fbf69c733e396b563"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/config.hpp"
+          },
+          "hashes": {
+            "sha-256": "135ec10d4ccd3f67f1297817033c8f31234f14b48ddd30a186ae096017005054"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/clock.hpp"
+          },
+          "hashes": {
+            "sha-256": "aba460d753be301fad2ebbd58e48fd8f2b9206eb294c7d21093feea0ff247c49"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/export.hpp"
+          },
+          "hashes": {
+            "sha-256": "29f4b24362266ece3e357c07f94850cd54c8aec336283920084b822f59c6ef30"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/time.hpp"
+          },
+          "hashes": {
+            "sha-256": "9f64578e480a83a80818ccc67c17b77f02051791387297c38b41b109731bcae5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/err.hpp"
+          },
+          "hashes": {
+            "sha-256": "db1eda0332028078e05c51da878a849beafa0d37aa049420fec3b77e2508e8fa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/fileinputstream.hpp"
+          },
+          "hashes": {
+            "sha-256": "1ffa369e8b49072f3708d7b456cc349d808284a05d098349d0c3b9f81ef4944d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/inputstream.hpp"
+          },
+          "hashes": {
+            "sha-256": "ae2e43302126c3617b5137bab77c0b4d890124b7512b5d396d5910d61ae6870d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/noncopyable.hpp"
+          },
+          "hashes": {
+            "sha-256": "5906dbc090de4f2e5fd996954edf932a57aaee7b0125598a5b22c4a3cb391d4a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/lock.hpp"
+          },
+          "hashes": {
+            "sha-256": "b9aafff734a9113eeb5b9303174184284a367922892b71edc4c81de910e4cb78"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/memoryinputstream.hpp"
+          },
+          "hashes": {
+            "sha-256": "53315704e53f44e681de5ddee3c5861bc8d9d278a098c817b1c568684fd5b957"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/mutex.hpp"
+          },
+          "hashes": {
+            "sha-256": "3416ce909df11481da926cc82a192b6c5731fae3245e86172d9d1d5a42133538"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/sleep.hpp"
+          },
+          "hashes": {
+            "sha-256": "b1e7719a0b3a153bfdc8b433c2dd75fc0d6a93b343cc8d6199c6c65ee8a4efe3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/string.hpp"
+          },
+          "hashes": {
+            "sha-256": "1a319faaae3b8905d8b1131ed52003369e40abf30f8fef3fbf070ce26706c40f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/utf.hpp"
+          },
+          "hashes": {
+            "sha-256": "61bee3705f6a4285146df13c6300328b202d0a46047f8bbb814c5b9e35e1110a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/utf.inl"
+          },
+          "hashes": {
+            "sha-256": "34c6aecff1ed342cb6f00922fd7c574c8dfd8cb9c748fc237a4a0679917b422c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/string.inl"
+          },
+          "hashes": {
+            "sha-256": "df8e045d588a3e41a29d34e2130a4c632a5b1da424b724436f6e3f0cec006e42"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/thread.hpp"
+          },
+          "hashes": {
+            "sha-256": "b3ca5356370f60e6f9146b76876a8d81ec124641848b3713ecf74a7323dc336c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/thread.inl"
+          },
+          "hashes": {
+            "sha-256": "515af83880545bad4eb4eaa1a086c9e6d0d9d3bd16f080005ddd20aba96994b0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/threadlocal.hpp"
+          },
+          "hashes": {
+            "sha-256": "d6b96ea6b2fc886768095ee404881d0ebc562faea20ee80196fa2701f0dc6bab"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/threadlocalptr.hpp"
+          },
+          "hashes": {
+            "sha-256": "a73ac43b53c0127c33b013603bbd9f1ee683e14b1f785cbecb705161d5c9bf53"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/threadlocalptr.inl"
+          },
+          "hashes": {
+            "sha-256": "849baf1c633786a237c5e8bb1cb01f7bc9080376f7d763c0b86c453c920ca4e2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/vector2.hpp"
+          },
+          "hashes": {
+            "sha-256": "ee0a5555039716313423927b70056310ac17344acf108c78d6520f0a5ab152c1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/vector2.inl"
+          },
+          "hashes": {
+            "sha-256": "30063f189ccc7cfe136e140c4a820e4f43880a05b4b2a0dce3fe68cd546a3db7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/vector3.hpp"
+          },
+          "hashes": {
+            "sha-256": "6c4c82c33df997c9066224b6246d4fb1d97596b9fb4eaff07e8586db8296a192"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/th0ma/onedrive - university of bergen/priv/cpp/raycastbanana/dependencies/sfml-2.5.1/include/sfml/system/vector3.inl"
+          },
+          "hashes": {
+            "sha-256": "7f8b1a6deaf62e9392ca860da5ec0642add970b9747a57705130137580a51679"
+          }
+        }
+      ]
+    }
+  ]
+}

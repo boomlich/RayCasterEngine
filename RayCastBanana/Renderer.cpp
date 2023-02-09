@@ -41,24 +41,6 @@ void Renderer::update(sf::Time dt)
     m_camera.update(m_width, m_height, m_model->getGrid());
     drawWorld();
 
-    for (int x = 0; x < m_width; x++)
-    {
-        for (size_t y = 0; y < m_height; y++)
-        {
-            m_pixelBuffer.setPixel(x, y, m_pixels[y * m_width + x]);
-        }
-    }
-
-
-
-    m_debugInfoTimer -= dt.asMicroseconds();
-    if (m_debugInfoTimer <= 0)
-    {
-        m_debugInfoTimer = 1;
-        m_debugFrameTime = dt.asMicroseconds();
-        m_debugFPS = 1000000 / dt.asMicroseconds();
-    }
-
     m_screenTexture.update(m_pixelBuffer);
     m_screenSprite.setTexture(m_screenTexture);
     
@@ -210,8 +192,6 @@ void Renderer::drawWorld()
             shading = 0.5f;
         }
 
-
-
         sf::Uint8 prevR;
         sf::Uint8 prevG;
         sf::Uint8 prevB;
@@ -221,35 +201,30 @@ void Renderer::drawWorld()
         {
             // Get texture pixel color
             int textureY = int(((float)i + heightOffset) * textureStep);
-            int y = (int)(drawStart + i);
-
-            int index = y * m_width + x;
 
             // Only calculate new color value if neccesary
-            // reducing the number of times getPixel is called
-            if (textureY == prevTextureY)
+            if (textureY != prevTextureY)
             {
-                m_pixels[index].r = prevR;
-                m_pixels[index].g = prevG;
-                m_pixels[index].b = prevB;
-                continue;
+                prevTextureY = textureY;
+
+                // Get color of the texture pixel
+                m_color = m_wallTexture.getPixel(textureX, textureY);
+                if (ray.verticleWall)
+                {
+                    m_color = sf::Color(m_color.r / 2, m_color.g / 2, m_color.b / 2, m_color.a);
+                }
+
+                // Calculate fog
+                m_color = sf::Color(
+                    m_color.r * shading,
+                    m_color.g * shading,
+                    m_color.b * shading,
+                    m_color.a);
+
             }
-
-            // Update color
-            m_color = m_wallTexture.getPixel(textureX, textureY);
-            m_pixels[index].r = m_color.r;
-            m_pixels[index].g = m_color.g;
-            m_pixels[index].b = m_color.b;
-
-            // Cache current colors
-            prevTextureY = textureY;
-            prevR = m_color.r;
-            prevG = m_color.g;
-            prevB = m_color.b;
-
-            m_pixels[index].r *= shading;
-            m_pixels[index].g *= shading;
-            m_pixels[index].b *= shading;
+            int y = (int)(drawStart + i);
+            //m_pixels[y * m_width + x] = sf::Color(m_color.r, m_color.g, m_color.b, m_color.a);
+            m_pixelBuffer.setPixel(x, y, m_color);
         }
 
 
@@ -285,10 +260,12 @@ void Renderer::drawWorld()
             int tx = int((floorX - (int)floorX) * 32);
             int ty = int((floorY - (int)floorY) * 32);
 
+            float fog = calculateFog(pointDist, 1, 15);
+
             // Draw floor
             if (tx != prevTX && ty != prevTY)
             {
-                float fog = calculateFog(pointDist, 1, 15);
+                //float fog = calculateFog(pointDist, 1, 15);
                 m_color = m_floorTexture.getPixel(tx, ty);
                 m_color = sf::Color(
                     m_color.r * fog,
@@ -296,12 +273,12 @@ void Renderer::drawWorld()
                     m_color.b * fog,
                     m_color.a);
             }
-            //m_pixelBuffer.setPixel(x, y, m_color);
+            m_pixelBuffer.setPixel(x, y, m_color);
 
             // Draw ceiling
             if (tx != prevTX && ty != prevTY)
             {
-                float fog = calculateFog(pointDist, 1, 15);
+                //float fog = calculateFog(pointDist, 1, 15);
                 m_color = m_ceilingTexture.getPixel(tx, ty);
                 m_color = sf::Color(
                     m_color.r * fog,
@@ -309,7 +286,7 @@ void Renderer::drawWorld()
                     m_color.b * fog,
                     m_color.a);
             }
-            //m_pixelBuffer.setPixel(x, m_height - y, m_color);
+            m_pixelBuffer.setPixel(x, m_height - y, m_color);
         }
     	x++;
     }
