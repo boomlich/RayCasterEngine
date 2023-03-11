@@ -158,34 +158,19 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="Door.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="CellGrid.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_draw.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_tables.cpp" />
-    <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp" />
     <ClCompile Include="mediaManager.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="m_grid.cpp" />
+    <ClCompile Include="grid.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Prop.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cell.h" />
-    <ClInclude Include="Controllable.h" />
     <ClInclude Include="CtrlPawn.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="Door.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="CellGrid.h" />
-    <ClInclude Include="GUI.h" />
     <ClInclude Include="ImGUI-1.88\imconfig-SFML.h" />
     <ClInclude Include="ImGUI-1.88\imconfig.h" />
     <ClInclude Include="ImGUI-1.88\imgui-SFML.h" />
@@ -197,16 +182,12 @@
     <ClInclude Include="ImGUI-1.88\imstb_truetype.h" />
     <ClInclude Include="MathMethods.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="m_grid.h" />
+    <ClInclude Include="grid.h" />
     <ClInclude Include="MapParser.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Prop.h" />
     <ClInclude Include="Ray.h" />
-    <ClInclude Include="Renderable.h" />
-    <ClInclude Include="RenderObj.h" />
     <ClInclude Include="mediaManager.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -34,21 +34,12 @@
     <Filter Include="Source Files\view\camera">
       <UniqueIdentifier>{5f349f58-95cf-4d69-82e6-88444e8e8b23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\props">
-      <UniqueIdentifier>{9ffca142-e691-4692-b64c-7169eda72ecd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\map\tiles">
-      <UniqueIdentifier>{01172544-84c4-43f2-a9bb-6221649be525}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\view\GUI">
-      <UniqueIdentifier>{1351e9d1-cda9-45a3-8e44-451e639a1145}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="m_grid.cpp">
+    <ClCompile Include="grid.cpp">
       <Filter>Source Files\map\grid</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
@@ -72,45 +63,15 @@
     <ClCompile Include="Cell.cpp">
       <Filter>Source Files\map\grid</Filter>
     </ClCompile>
-    <ClCompile Include="Prop.cpp">
-      <Filter>Source Files\props</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Source Files\model</Filter>
-    </ClCompile>
-    <ClCompile Include="Door.cpp">
-      <Filter>Source Files\map\tiles</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI-1.88\imgui-SFML.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CellGrid.cpp">
-      <Filter>Source Files\map\grid</Filter>
-    </ClCompile>
     <ClCompile Include="mediaManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Source Files\view\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mediaManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="m_grid.h">
+    <ClInclude Include="grid.h">
       <Filter>Source Files\map\grid</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
@@ -137,29 +98,11 @@
     <ClInclude Include="CtrlPawn.h">
       <Filter>Source Files\model</Filter>
     </ClInclude>
-    <ClInclude Include="Controllable.h">
-      <Filter>Source Files\model</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderable.h">
-      <Filter>Source Files\model</Filter>
-    </ClInclude>
     <ClInclude Include="Ray.h">
       <Filter>Source Files\view\camera</Filter>
     </ClInclude>
     <ClInclude Include="Cell.h">
       <Filter>Source Files\map\grid</Filter>
-    </ClInclude>
-    <ClInclude Include="Prop.h">
-      <Filter>Source Files\props</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Source Files\model</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderObj.h">
-      <Filter>Source Files\view\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Door.h">
-      <Filter>Source Files\map\tiles</Filter>
     </ClInclude>
     <ClInclude Include="ImGUI-1.88\imconfig.h">
       <Filter>Header Files</Filter>
@@ -187,15 +130,6 @@
     </ClInclude>
     <ClInclude Include="ImGUI-1.88\imstb_truetype.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.h">
-      <Filter>Source Files\view\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Source Files\view\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CellGrid.h">
-      <Filter>Source Files\map\grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

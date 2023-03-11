@@ -1,5 +1,5 @@
 ﻿#include "MapParser.h"
-#include "texture_loader.h"
+#include "mediaManager.h"
 
 Grid MapParser::parse_img(const std::string& path)
 {
@@ -23,6 +23,11 @@ Grid MapParser::parse_img(const std::string& path)
 		}
 	}
 	return grid;
+}
+
+Grid MapParser::parseLevelString(const std::string level)
+{
+	return Grid();
 }
 
 CellState MapParser::parse_color(sf::Color color)

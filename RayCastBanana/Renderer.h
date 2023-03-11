@@ -2,8 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Camera.h"
 #include "Model.h"
-#include "m_grid.h"
-#include "UIManager.h"
+#include "grid.h"
 
 
 struct Pixel
@@ -34,10 +33,13 @@ private:
 	sf::Image m_pixelBuffer;
 	sf::Texture m_screenTexture;
 	sf::Sprite m_screenSprite;
+	sf::Color m_color;
 
-	std::unordered_map<int, std::vector<Pixel>> m_depthBuffer;
+	std::vector<sf::Color> m_pixels;
 
-	UIManager m_uiManager;
+	int m_debugInfoTimer = 1000000;
+	int m_debugFPS;
+	int m_debugFrameTime;
 
 public:
 	int m_width;
@@ -48,11 +50,8 @@ public:
 private:
 	void drawMinimap(Grid& grid, CtrlPawn* player);
 	void drawWorld();
-	void drawObjects();
 	double calculateFog(double dist, double minDist, double maxDist);
-	void clearDepthBuffer();
-	void drawFromDepth();
-	void addShapeToPixelBuffer(sf::RectangleShape &shape, double posX, double posY, sf::Color color);
+	void debug(sf::Time dt);
 
 public:
 	Renderer(int width, int height, Model* model);

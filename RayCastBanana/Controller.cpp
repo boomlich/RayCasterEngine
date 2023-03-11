@@ -57,14 +57,14 @@ void Controller::keyboardInput()
 	}
 
 	// Lock the mouse in center of screen
-	/*int newMouseX = sf::Mouse::getPosition().x;
-	m_pawn->rotate((newMouseX - oldMouseX) * m_dt * 0.25);
-	sf::Mouse::setPosition(sf::Vector2i(
-		m_renderer->getWindowPosition().x + m_renderer->getWidth() / 2,
-		m_renderer->getWindowPosition().y + m_renderer->getHeight() / 2
-	));
+	//int newMouseX = sf::Mouse::getPosition().x;
+	//m_pawn->rotate((newMouseX - oldMouseX) * m_dt * 0.25);
+	//sf::Mouse::setPosition(sf::Vector2i(
+	//	m_renderer->getWindowPosition().x + m_renderer->getWidth() / 2,
+	//	m_renderer->getWindowPosition().y + m_renderer->getHeight() / 2
+	//));
 
-	oldMouseX = sf::Mouse::getPosition().x;*/
+	//oldMouseX = sf::Mouse::getPosition().x;
 	
 }
 
